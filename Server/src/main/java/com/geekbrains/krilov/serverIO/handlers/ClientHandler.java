@@ -1,7 +1,7 @@
-package com.geekbrains.krilov.server.handlers;
+package com.geekbrains.krilov.serverIO.handlers;
 
 import com.geekbrains.krilov.FileUtility;
-import com.geekbrains.krilov.server.ServerApp;
+import com.geekbrains.krilov.serverIO.ServerApp;
 
 import java.io.*;
 import java.net.Socket;

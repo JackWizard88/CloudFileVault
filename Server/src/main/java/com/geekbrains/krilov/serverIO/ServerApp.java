@@ -1,6 +1,6 @@
-package com.geekbrains.krilov.server;
+package com.geekbrains.krilov.serverIO;
 
-import com.geekbrains.krilov.server.handlers.ClientHandler;
+import com.geekbrains.krilov.serverIO.handlers.ClientHandler;
 
 import java.io.*;
 import java.net.ServerSocket;
