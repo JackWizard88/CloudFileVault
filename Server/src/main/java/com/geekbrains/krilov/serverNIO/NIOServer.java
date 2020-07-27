@@ -1,5 +1,7 @@
 package com.geekbrains.krilov.serverNIO;
 
+import com.geekbrains.krilov.FileUtility;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -7,7 +9,12 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class NIOServer implements Runnable {
     private ServerSocketChannel server;
@@ -42,7 +49,7 @@ public class NIOServer implements Runnable {
                         SocketChannel channel = ((ServerSocketChannel) key.channel()).accept();
                         channel.configureBlocking(false);
                         channel.register(selector, SelectionKey.OP_READ);
-                        channel.write(ByteBuffer.wrap("Connected to Server. \nPlease use \"/auth username\" to LogIn".getBytes()));
+                        channel.write(ByteBuffer.wrap("/info Please use \"/auth username\" to LogIn".getBytes()));
                     }
                     if (key.isReadable()) {
 
@@ -73,9 +80,12 @@ public class NIOServer implements Runnable {
         if (line.startsWith("/auth")) {
             String[] lineParts = line.split(" ", 2);
             if (lineParts[1] != null) {
-                key.attach(lineParts[1]);
+                String userid = lineParts[1].trim();
+                key.attach(userid);
+                System.out.println(userid);
+                FileUtility.createDirectory("./" + userid);
                 System.out.println("client authorised as " + key.attachment());
-            } else ((SocketChannel) key.channel()).write(ByteBuffer.wrap("user cannot be empty".getBytes()));
+            } else ((SocketChannel) key.channel()).write(ByteBuffer.wrap("/info user cannot be empty".getBytes()));
         } else if (key.attachment() != null) {
             if (line.startsWith("/get")) {
                 System.out.println(line);
@@ -84,11 +94,12 @@ public class NIOServer implements Runnable {
                 System.out.println(line);
                 //TODO Server saves FILE
             } else if (line.startsWith("/list")) {
-                System.out.println(line);
-                ((SocketChannel) key.channel()).write(ByteBuffer.wrap("List of files".getBytes()));
-                //TODO Server sends List of files
+                List<Path> list = Files.list(Paths.get("./" + key.attachment().toString().trim())).collect(Collectors.toList());
+                String dirList = "/list " + FileUtility.sendFileList(list);
+                ((SocketChannel) key.channel()).write(ByteBuffer.wrap(dirList.getBytes()));
+
             }
-        } else ((SocketChannel) key.channel()).write(ByteBuffer.wrap("Please LogIn first".getBytes()));
+        } else ((SocketChannel) key.channel()).write(ByteBuffer.wrap("/info Please LogIn first".getBytes()));
     }
 
     public static void main(String[] args) throws IOException {
