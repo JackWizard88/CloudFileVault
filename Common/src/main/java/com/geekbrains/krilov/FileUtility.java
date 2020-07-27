@@ -69,12 +69,12 @@ public class FileUtility {
         }
     }
 
-    public static void sendFileList(DataOutputStream os, List<Path> filelist) {
+    public static void sendFileList(DataOutputStream os, List<Path> fileList) {
         try {
             System.out.println("sending file list...");
             String list = "";
 
-            for (Path f : filelist) {
+            for (Path f : fileList) {
                 String path = f.getFileName().toString();
                 list += path + "//";
             }
