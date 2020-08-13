@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="250.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.krilov.clientNIO.Controllers.RegScreenController">
+    <center>
+        <AnchorPane prefHeight="179.0" prefWidth="350.0" BorderPane.alignment="CENTER">
+            <TextField fx:id="loginTextField" layoutX="135.0" layoutY="56.0" prefHeight="25.0" prefWidth="148.0" />
+            <PasswordField fx:id="passTextField1" layoutX="135.0" layoutY="86.0" />
+            <PasswordField fx:id="passTextField2" layoutX="135.0" layoutY="116.0" />
+            <Button fx:id="registerButton" layoutX="19.0" layoutY="164.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" text="Зарегистрироваться" />
+            <Button fx:id="cancelButton" layoutX="174.0" layoutY="164.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Отмена" />
+            <Label alignment="CENTER_RIGHT" layoutX="29.0" layoutY="59.0" prefHeight="20.0" prefWidth="100.0" text="Логин:">
+                <font>
+                    <Font size="14.0" />
+                </font></Label>
+            <Label alignment="CENTER_RIGHT" layoutX="29.0" layoutY="89.0" prefHeight="20.0" prefWidth="100.0" text="Пароль:">
+                <font>
+                    <Font size="14.0" />
+                </font></Label>
+            <Label alignment="CENTER_RIGHT" layoutX="17.0" layoutY="119.0" prefHeight="20.0" prefWidth="112.0" text="Еще раз пароль:">
+                <font>
+                    <Font size="14.0" />
+                </font></Label>
+        </AnchorPane>
+    </center>
+</BorderPane>
