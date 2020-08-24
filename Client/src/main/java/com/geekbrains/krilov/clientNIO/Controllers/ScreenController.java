@@ -39,18 +39,6 @@ public class ScreenController {
         return screencontroller;
     }
 
-    public Parent getAuthScreen() {
-        return authScreen;
-    }
-
-    public Parent getWorkScreen() {
-        return workScreen;
-    }
-
-    public Parent getRegScreen() {
-        return regScreen;
-    }
-
     public void setRegScreen() {
         stage.setScene(regScene);
     }

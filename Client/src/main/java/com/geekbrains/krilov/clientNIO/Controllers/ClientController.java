@@ -1,14 +1,15 @@
 package com.geekbrains.krilov.clientNIO.Controllers;
 
 import com.geekbrains.krilov.clientNIO.Services.NIONetworkService;
-import javafx.application.Platform;
-
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ClientController {
 
     private static ClientController clientController;
     private NIONetworkService nns;
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(1);
 
     public ClientController(int port, String address) {
         this.nns = new NIONetworkService(port, address);
@@ -26,18 +27,17 @@ public class ClientController {
     }
 
     public void run() {
-        try {
-            nns.connect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        runAuth();
+
+        executorService.execute(() -> {
+            try {
+                nns.connect();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
     }
 
-    private void runAuth() {
-
-    }
 
     public void sendRegMessage(String login, String password) throws IOException {
     }

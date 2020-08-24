@@ -15,9 +15,9 @@ public class ClientApp extends Application {
         primaryStage.setTitle("CFV CloudFileVault");
         ScreenController.getInstance(primaryStage).setAuthScreen();
         ClientController.getInstance(PORT, ADDRESS).run();
+        primaryStage.setOnCloseRequest(e -> System.exit(0));
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);

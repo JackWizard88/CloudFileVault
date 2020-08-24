@@ -38,7 +38,6 @@ public class NIONetworkService {
         Selector selector = Selector.open();
         channel.register(selector, SelectionKey.OP_CONNECT);
         channel.connect(new InetSocketAddress(host, port));
-        BlockingQueue<String> queue = new ArrayBlockingQueue<>(2);
 
         executorService.execute(() -> {
             while (true) {
