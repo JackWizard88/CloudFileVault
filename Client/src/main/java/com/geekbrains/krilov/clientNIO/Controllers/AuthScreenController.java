@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -37,7 +38,15 @@ public class AuthScreenController implements Initializable {
     }
 
     private void sendAuthData() {
-        //тут отправляем пакет данных на сервер для регистрации
+        ClientController.getInstance().setCurrentState(ClientController.Status.DEMAND_REGISTRATION);
+        String login = loginText.getText().trim();
+        String pass = passwordText.getText().trim();
+        try {
+            ClientController.getInstance().sendAuthMessage(login, pass);
+        } catch (IOException e) {
+            System.out.println("error sending auth message");
+            showErrorMessage("connection lost");
+        }
     }
 
     private void register() {

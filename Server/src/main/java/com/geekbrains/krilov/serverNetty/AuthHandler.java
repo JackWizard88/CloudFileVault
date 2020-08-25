@@ -5,6 +5,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
 public class AuthHandler extends ChannelInboundHandlerAdapter {
@@ -13,6 +14,7 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
     private Thread authKiller;
 
     private boolean isAuthorised = false;
+    private String login;
 
     public AuthHandler(AuthService authService) {
         System.out.println("Client connected");
@@ -34,8 +36,9 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
             return;
         }
 
-        if (input.split(" ")[0].equals("/auth")) {      //todo заменить на байтовую команду
+        if (input.split(" ")[0].equals("/auth")) {      //todo заменить на байтовую команду??
             String login = input.split(" ")[1];
+            this.login = login;
             String password = input.split(" ")[2];
 
             isAuthorised = authService.logIn(login, password);
@@ -43,6 +46,11 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
             if (isAuthorised) {
                 authKiller.interrupt();
                 ctx.pipeline().addLast(new DataHandler(login));
+                String answer = "/auth " + "granted"; //todo заменить на байтовую команду??
+                ctx.writeAndFlush(ByteBuffer.wrap(answer.getBytes()));
+            } else {
+                String answer = "/auth " + "denied"; //todo заменить на байтовую команду??
+                ctx.writeAndFlush(answer.getBytes());
             }
         } else if (input.split(" ")[0].equals("/reg")) {
             System.out.println("incoming reg data...");
@@ -51,6 +59,11 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
             authService.registerNewUser(login, password);
         }
 
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        authService.logOut(login);
     }
 
     private void connectionTimeOutKiller(ChannelHandlerContext ctx) {

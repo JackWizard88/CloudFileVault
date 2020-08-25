@@ -32,9 +32,9 @@ public class BaseAuthService implements AuthService {
 
             ResultSet rs = statement.executeQuery();
 
-            if (rs.getBoolean(5)) return false; //запрет двойного входа
+            if (rs.getBoolean(4)) return false; //запрет двойного входа
 
-            else if (rs.getString(4).equals(password)) {
+            else if (rs.getString(3).equals(password)) {
                 successfulAuth = true;
                 String sql1 = "UPDATE userData SET Logged = true WHERE Login = ?";
                 PreparedStatement statement1 = sqlconnection.prepareStatement(sql1);
@@ -57,6 +57,7 @@ public class BaseAuthService implements AuthService {
             PreparedStatement statement2 = sqlconnection.prepareStatement(sql2);
             statement2.setString( 1, login);
             statement2.execute();
+            logger.info(login + " Logged out");
         } catch (SQLException e) {
             e.printStackTrace();
         }

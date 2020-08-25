@@ -1,6 +1,7 @@
 package com.geekbrains.krilov.clientNIO.Services;
 
 import com.geekbrains.krilov.clientNIO.Callback;
+import com.geekbrains.krilov.clientNIO.Controllers.ClientController;
 import com.geekbrains.krilov.clientNIO.Controllers.ScreenController;
 
 import java.io.*;
@@ -19,7 +20,6 @@ public class NIONetworkService {
     private SocketChannel channel;
 
     private static final ExecutorService executorService = Executors.newFixedThreadPool(1);
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public NIONetworkService(int port, String host) {
         this.host = host;
@@ -35,32 +35,39 @@ public class NIONetworkService {
 
         executorService.execute(() -> {
             while (true) {
+                try {
+                    selector.select();
+                    System.out.println("1");
+                    for (SelectionKey key : selector.selectedKeys()) {
+                        if (key.isConnectable()) {
+                            channel.finishConnect();
+                            key.interestOps(SelectionKey.OP_READ);
+                        } else if (key.isReadable()) {
+                            System.out.println("incoming data");
+                            ByteBuffer buffer = ByteBuffer.allocate(1024);
+                            buffer.clear();
+                            channel.read(buffer);
+                            String line = new String(buffer.array());
+                            System.out.println(line);
 
-                while (true) {
-                    try {
-                        selector.select();
-                        for (SelectionKey key : selector.selectedKeys()) {
-                            if (key.isConnectable()) {
-                                channel.finishConnect();
-                                key.interestOps(SelectionKey.OP_READ);
-                            } else if (key.isReadable()) {
-                                ByteBuffer buffer = ByteBuffer.allocate(1024);
-                                buffer.clear();
-                                channel.read(buffer);
-                                //todo тут надо обработать данные от сервера
+                            if (line.split(" ")[0].equals("/auth")) {
+                                if (line.split(" ")[1].equals("granted")) {
+                                    ClientController.getInstance().setCurrentState(ClientController.Status.REGISTERED);
+                                    ScreenController.getInstance().setWorkScene();
+                                } else if (line.split(" ")[1].equals("denied")) {
+                                    ScreenController.getInstance().showErrorMessage("Auth denied", null);
+                                }
                             }
+                            //todo тут надо обработать данные от сервера
                         }
-                    } catch (IOException e) {
-                        ScreenController.getInstance().showErrorMessage("Сервер авторизации недоступен", () -> {
-                            System.exit(0);
-                        });
                     }
+                } catch (IOException e) {
+                    ScreenController.getInstance().showErrorMessage("Сервер авторизации недоступен", () -> {
+                        System.exit(0);
+                    });
                 }
             }
         });
-
-
-
     }
 
     public void sendData(ByteBuffer buf, Callback callback) {
@@ -70,7 +77,9 @@ public class NIONetworkService {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                callback.callback();
+                if (callback != null) {
+                    callback.callback();
+                }
             }
         }
     }

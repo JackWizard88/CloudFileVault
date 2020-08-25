@@ -9,6 +9,16 @@ import java.util.concurrent.Executors;
 
 public class ClientController {
 
+    public enum Status {
+        IDLE, DEMAND_REGISTRATION, REGISTERED
+    }
+
+    private final String AUTH_COMMAND = "/auth ";
+    private final String REG_COMMAND = "/reg ";
+
+    private Status currentState = Status.IDLE;
+
+
     private static ClientController clientController;
     private NIONetworkService nns;
     private static final ExecutorService executorService = Executors.newFixedThreadPool(1);
@@ -44,11 +54,23 @@ public class ClientController {
 
     }
 
+    public Status getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(Status currentState) {
+        this.currentState = currentState;
+    }
 
     public void sendRegMessage(String login, String password, Callback callback) throws IOException {
-        String data = "/reg " + login + " " + password;
+        String data = REG_COMMAND + login + " " + password;
         ByteBuffer buf = ByteBuffer.wrap(data.getBytes());
-
         nns.sendData(buf, () -> callback.callback());
+    }
+
+    public void sendAuthMessage(String login, String password) throws IOException {
+        String data = AUTH_COMMAND + login + " " + password;
+        ByteBuffer buf = ByteBuffer.wrap(data.getBytes());
+        nns.sendData(buf, null);
     }
 }
