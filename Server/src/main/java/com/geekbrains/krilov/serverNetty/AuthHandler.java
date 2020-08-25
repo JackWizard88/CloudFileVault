@@ -1,8 +1,11 @@
 package com.geekbrains.krilov.serverNetty;
 
 import com.geekbrains.krilov.serverNetty.AuthService.AuthService;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+
+import java.nio.charset.Charset;
 
 public class AuthHandler extends ChannelInboundHandlerAdapter {
 
@@ -23,7 +26,8 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        String input = (String) msg;
+        ByteBuf buf = (ByteBuf) msg;
+        String input = buf.toString(Charset.forName("utf-8"));
 
         if (isAuthorised) {
             ctx.fireChannelRead(input);
@@ -40,6 +44,11 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
                 authKiller.interrupt();
                 ctx.pipeline().addLast(new DataHandler(login));
             }
+        } else if (input.split(" ")[0].equals("/reg")) {
+            System.out.println("incoming reg data...");
+            String login = input.split(" ")[1];
+            String password = input.split(" ")[2];
+            authService.registerNewUser(login, password);
         }
 
     }
@@ -47,7 +56,7 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
     private void connectionTimeOutKiller(ChannelHandlerContext ctx) {
         authKiller = new Thread(() -> {
             try {
-                Thread.sleep(60000);
+                Thread.sleep(120000);
                 System.out.println("Client disconnected by timeout");
 
                 ctx.close();

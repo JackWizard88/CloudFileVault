@@ -1,7 +1,6 @@
 package com.geekbrains.krilov;
 
 import io.netty.buffer.ByteBuf;
-
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 
@@ -31,7 +30,6 @@ public class PackageHandler {
                 }
             }
 
-
             if (currentState == State.NAME_LENGTH) {
                 if (buf.readableBytes() >= 4) {
                     System.out.println("STATE: Get filename length");
@@ -45,7 +43,7 @@ public class PackageHandler {
                     byte[] fileName = new byte[nextLength];
                     buf.readBytes(fileName);
                     System.out.println("STATE: Filename received - _" + new String(fileName, "UTF-8"));
-                    out = new BufferedOutputStream(new FileOutputStream("_" + new String(fileName)));
+                    out = new BufferedOutputStream(new FileOutputStream("./Repository/" + login + "/" + new String(fileName)));
                     currentState = State.FILE_LENGTH;
                 }
             }
@@ -71,6 +69,7 @@ public class PackageHandler {
                 }
             }
         }
+
         if (buf.readableBytes() == 0) {
             buf.release();
         }

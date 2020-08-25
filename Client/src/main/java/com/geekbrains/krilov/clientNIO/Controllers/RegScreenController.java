@@ -41,7 +41,7 @@ public class RegScreenController {
         if (!login.isEmpty() && !password.isEmpty()) {
             if (password.equals(password2)) {
                 try {
-                    ClientController.getInstance().sendRegMessage(login, password);
+                    ClientController.getInstance().sendRegMessage(login, password, () -> showInfoMessage("Вы успешно зарегистрированы!"));
                 } catch (IOException e) {
                     e.printStackTrace();
                     showErrorMessage("Ошибка");
@@ -58,7 +58,7 @@ public class RegScreenController {
 
     public void closeRegWindow() {
         try {
-            ScreenController.getInstance().setAuthScreen();
+            ScreenController.getInstance().setAuthScene();
         } catch (Exception e) {
             e.printStackTrace();
         }

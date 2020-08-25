@@ -623,3 +623,143 @@ java.io.IOException: Удаленный хост принудительно ра
 2020-08-24 09:08:17.573 [main] DEBUG io.netty.buffer.ByteBufUtil - -Dio.netty.allocator.type: pooled
 2020-08-24 09:08:17.573 [main] DEBUG io.netty.buffer.ByteBufUtil - -Dio.netty.threadLocalDirectBufferSize: 0
 2020-08-24 09:08:17.573 [main] DEBUG io.netty.buffer.ByteBufUtil - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+2020-08-24 14:18:15.847 [main] DEBUG io.netty.util.internal.logging.InternalLoggerFactory - Using Log4J2 as the default logging framework
+2020-08-24 14:18:15.855 [main] DEBUG io.netty.channel.MultithreadEventLoopGroup - -Dio.netty.eventLoopThreads: 32
+2020-08-24 14:18:15.875 [main] DEBUG io.netty.util.internal.InternalThreadLocalMap - -Dio.netty.threadLocalMap.stringBuilder.initialSize: 1024
+2020-08-24 14:18:15.875 [main] DEBUG io.netty.util.internal.InternalThreadLocalMap - -Dio.netty.threadLocalMap.stringBuilder.maxSize: 4096
+2020-08-24 14:18:15.883 [main] DEBUG io.netty.channel.nio.NioEventLoop - -Dio.netty.noKeySetOptimization: false
+2020-08-24 14:18:15.884 [main] DEBUG io.netty.channel.nio.NioEventLoop - -Dio.netty.selectorAutoRebuildThreshold: 512
+2020-08-24 14:18:15.902 [main] DEBUG io.netty.util.internal.PlatformDependent - Platform: Windows
+2020-08-24 14:18:15.904 [main] DEBUG io.netty.util.internal.PlatformDependent0 - -Dio.netty.noUnsafe: false
+2020-08-24 14:18:15.904 [main] DEBUG io.netty.util.internal.PlatformDependent0 - Java version: 8
+2020-08-24 14:18:15.905 [main] DEBUG io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.theUnsafe: available
+2020-08-24 14:18:15.906 [main] DEBUG io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.copyMemory: available
+2020-08-24 14:18:15.907 [main] DEBUG io.netty.util.internal.PlatformDependent0 - java.nio.Buffer.address: available
+2020-08-24 14:18:15.907 [main] DEBUG io.netty.util.internal.PlatformDependent0 - direct buffer constructor: available
+2020-08-24 14:18:15.908 [main] DEBUG io.netty.util.internal.PlatformDependent0 - java.nio.Bits.unaligned: available, true
+2020-08-24 14:18:15.908 [main] DEBUG io.netty.util.internal.PlatformDependent0 - jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable prior to Java9
+2020-08-24 14:18:15.909 [main] DEBUG io.netty.util.internal.PlatformDependent0 - java.nio.DirectByteBuffer.<init>(long, int): available
+2020-08-24 14:18:15.909 [main] DEBUG io.netty.util.internal.PlatformDependent - sun.misc.Unsafe: available
+2020-08-24 14:18:15.909 [main] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.tmpdir: C:\Users\Akira\AppData\Local\Temp (java.io.tmpdir)
+2020-08-24 14:18:15.910 [main] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+2020-08-24 14:18:15.911 [main] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.maxDirectMemory: 7616856064 bytes
+2020-08-24 14:18:15.911 [main] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.uninitializedArrayAllocationThreshold: -1
+2020-08-24 14:18:15.913 [main] DEBUG io.netty.util.internal.CleanerJava6 - java.nio.ByteBuffer.cleaner(): available
+2020-08-24 14:18:15.913 [main] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.noPreferDirect: false
+2020-08-24 14:18:15.922 [main] DEBUG io.netty.util.internal.PlatformDependent - org.jctools-core.MpscChunkedArrayQueue: available
+2020-08-24 14:18:16.172 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-08-24 14:18:16.172 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-08-24 14:18:16.192 [main] DEBUG io.netty.channel.DefaultChannelId - -Dio.netty.processId: 13560 (auto-detected)
+2020-08-24 14:18:16.194 [main] DEBUG io.netty.util.NetUtil - -Djava.net.preferIPv4Stack: false
+2020-08-24 14:18:16.195 [main] DEBUG io.netty.util.NetUtil - -Djava.net.preferIPv6Addresses: false
+2020-08-24 14:18:16.264 [main] DEBUG io.netty.util.NetUtil - Loopback interface: lo (Software Loopback Interface 1, 127.0.0.1)
+2020-08-24 14:18:16.265 [main] DEBUG io.netty.util.NetUtil - Failed to get SOMAXCONN from sysctl and file \proc\sys\net\core\somaxconn. Default: 200
+2020-08-24 14:18:16.333 [main] DEBUG io.netty.channel.DefaultChannelId - -Dio.netty.machineId: 8c:82:b9:ff:fe:95:0b:42 (auto-detected)
+2020-08-24 14:18:16.347 [main] DEBUG io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.level: simple
+2020-08-24 14:18:16.347 [main] DEBUG io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.targetRecords: 4
+2020-08-24 14:18:16.376 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numHeapArenas: 32
+2020-08-24 14:18:16.376 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numDirectArenas: 32
+2020-08-24 14:18:16.376 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.pageSize: 8192
+2020-08-24 14:18:16.376 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxOrder: 11
+2020-08-24 14:18:16.377 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.chunkSize: 16777216
+2020-08-24 14:18:16.377 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.tinyCacheSize: 512
+2020-08-24 14:18:16.377 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.smallCacheSize: 256
+2020-08-24 14:18:16.377 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.normalCacheSize: 64
+2020-08-24 14:18:16.377 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+2020-08-24 14:18:16.378 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.cacheTrimInterval: 8192
+2020-08-24 14:18:16.378 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.cacheTrimIntervalMillis: 0
+2020-08-24 14:18:16.378 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.useCacheForAllThreads: true
+2020-08-24 14:18:16.378 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxCachedByteBuffersPerChunk: 1023
+2020-08-24 14:18:16.388 [main] DEBUG io.netty.buffer.ByteBufUtil - -Dio.netty.allocator.type: pooled
+2020-08-24 14:18:16.388 [main] DEBUG io.netty.buffer.ByteBufUtil - -Dio.netty.threadLocalDirectBufferSize: 0
+2020-08-24 14:18:16.388 [main] DEBUG io.netty.buffer.ByteBufUtil - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+2020-08-24 14:18:36.917 [nioEventLoopGroup-3-1] DEBUG io.netty.util.Recycler - -Dio.netty.recycler.maxCapacityPerThread: 4096
+2020-08-24 14:18:36.917 [nioEventLoopGroup-3-1] DEBUG io.netty.util.Recycler - -Dio.netty.recycler.maxSharedCapacityFactor: 2
+2020-08-24 14:18:36.918 [nioEventLoopGroup-3-1] DEBUG io.netty.util.Recycler - -Dio.netty.recycler.linkCapacity: 16
+2020-08-24 14:18:36.918 [nioEventLoopGroup-3-1] DEBUG io.netty.util.Recycler - -Dio.netty.recycler.ratio: 8
+2020-08-24 14:18:36.927 [nioEventLoopGroup-3-1] DEBUG io.netty.buffer.AbstractByteBuf - -Dio.netty.buffer.checkAccessible: true
+2020-08-24 14:18:36.927 [nioEventLoopGroup-3-1] DEBUG io.netty.buffer.AbstractByteBuf - -Dio.netty.buffer.checkBounds: true
+2020-08-24 14:18:36.928 [nioEventLoopGroup-3-1] DEBUG io.netty.util.ResourceLeakDetectorFactory - Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@738852fc
+2020-08-24 14:22:07.515 [main] DEBUG io.netty.util.internal.logging.InternalLoggerFactory - Using Log4J2 as the default logging framework
+2020-08-24 14:22:07.522 [main] DEBUG io.netty.channel.MultithreadEventLoopGroup - -Dio.netty.eventLoopThreads: 32
+2020-08-24 14:22:07.542 [main] DEBUG io.netty.util.internal.InternalThreadLocalMap - -Dio.netty.threadLocalMap.stringBuilder.initialSize: 1024
+2020-08-24 14:22:07.542 [main] DEBUG io.netty.util.internal.InternalThreadLocalMap - -Dio.netty.threadLocalMap.stringBuilder.maxSize: 4096
+2020-08-24 14:22:07.551 [main] DEBUG io.netty.channel.nio.NioEventLoop - -Dio.netty.noKeySetOptimization: false
+2020-08-24 14:22:07.551 [main] DEBUG io.netty.channel.nio.NioEventLoop - -Dio.netty.selectorAutoRebuildThreshold: 512
+2020-08-24 14:22:07.569 [main] DEBUG io.netty.util.internal.PlatformDependent - Platform: Windows
+2020-08-24 14:22:07.571 [main] DEBUG io.netty.util.internal.PlatformDependent0 - -Dio.netty.noUnsafe: false
+2020-08-24 14:22:07.571 [main] DEBUG io.netty.util.internal.PlatformDependent0 - Java version: 8
+2020-08-24 14:22:07.573 [main] DEBUG io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.theUnsafe: available
+2020-08-24 14:22:07.573 [main] DEBUG io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.copyMemory: available
+2020-08-24 14:22:07.574 [main] DEBUG io.netty.util.internal.PlatformDependent0 - java.nio.Buffer.address: available
+2020-08-24 14:22:07.574 [main] DEBUG io.netty.util.internal.PlatformDependent0 - direct buffer constructor: available
+2020-08-24 14:22:07.575 [main] DEBUG io.netty.util.internal.PlatformDependent0 - java.nio.Bits.unaligned: available, true
+2020-08-24 14:22:07.576 [main] DEBUG io.netty.util.internal.PlatformDependent0 - jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable prior to Java9
+2020-08-24 14:22:07.576 [main] DEBUG io.netty.util.internal.PlatformDependent0 - java.nio.DirectByteBuffer.<init>(long, int): available
+2020-08-24 14:22:07.576 [main] DEBUG io.netty.util.internal.PlatformDependent - sun.misc.Unsafe: available
+2020-08-24 14:22:07.577 [main] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.tmpdir: C:\Users\Akira\AppData\Local\Temp (java.io.tmpdir)
+2020-08-24 14:22:07.577 [main] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+2020-08-24 14:22:07.578 [main] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.maxDirectMemory: 7616856064 bytes
+2020-08-24 14:22:07.578 [main] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.uninitializedArrayAllocationThreshold: -1
+2020-08-24 14:22:07.579 [main] DEBUG io.netty.util.internal.CleanerJava6 - java.nio.ByteBuffer.cleaner(): available
+2020-08-24 14:22:07.580 [main] DEBUG io.netty.util.internal.PlatformDependent - -Dio.netty.noPreferDirect: false
+2020-08-24 14:22:07.589 [main] DEBUG io.netty.util.internal.PlatformDependent - org.jctools-core.MpscChunkedArrayQueue: available
+2020-08-24 14:22:07.841 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-08-24 14:22:07.841 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-08-24 14:22:07.861 [main] DEBUG io.netty.channel.DefaultChannelId - -Dio.netty.processId: 3308 (auto-detected)
+2020-08-24 14:22:07.864 [main] DEBUG io.netty.util.NetUtil - -Djava.net.preferIPv4Stack: false
+2020-08-24 14:22:07.864 [main] DEBUG io.netty.util.NetUtil - -Djava.net.preferIPv6Addresses: false
+2020-08-24 14:22:07.934 [main] DEBUG io.netty.util.NetUtil - Loopback interface: lo (Software Loopback Interface 1, 127.0.0.1)
+2020-08-24 14:22:07.935 [main] DEBUG io.netty.util.NetUtil - Failed to get SOMAXCONN from sysctl and file \proc\sys\net\core\somaxconn. Default: 200
+2020-08-24 14:22:08.003 [main] DEBUG io.netty.channel.DefaultChannelId - -Dio.netty.machineId: 8c:82:b9:ff:fe:95:0b:42 (auto-detected)
+2020-08-24 14:22:08.016 [main] DEBUG io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.level: simple
+2020-08-24 14:22:08.017 [main] DEBUG io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.targetRecords: 4
+2020-08-24 14:22:08.046 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numHeapArenas: 32
+2020-08-24 14:22:08.046 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numDirectArenas: 32
+2020-08-24 14:22:08.046 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.pageSize: 8192
+2020-08-24 14:22:08.046 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxOrder: 11
+2020-08-24 14:22:08.046 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.chunkSize: 16777216
+2020-08-24 14:22:08.047 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.tinyCacheSize: 512
+2020-08-24 14:22:08.047 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.smallCacheSize: 256
+2020-08-24 14:22:08.047 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.normalCacheSize: 64
+2020-08-24 14:22:08.047 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+2020-08-24 14:22:08.047 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.cacheTrimInterval: 8192
+2020-08-24 14:22:08.047 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.cacheTrimIntervalMillis: 0
+2020-08-24 14:22:08.048 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.useCacheForAllThreads: true
+2020-08-24 14:22:08.048 [main] DEBUG io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxCachedByteBuffersPerChunk: 1023
+2020-08-24 14:22:08.057 [main] DEBUG io.netty.buffer.ByteBufUtil - -Dio.netty.allocator.type: pooled
+2020-08-24 14:22:08.058 [main] DEBUG io.netty.buffer.ByteBufUtil - -Dio.netty.threadLocalDirectBufferSize: 0
+2020-08-24 14:22:08.058 [main] DEBUG io.netty.buffer.ByteBufUtil - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+2020-08-24 14:22:19.648 [nioEventLoopGroup-3-1] DEBUG io.netty.util.Recycler - -Dio.netty.recycler.maxCapacityPerThread: 4096
+2020-08-24 14:22:19.648 [nioEventLoopGroup-3-1] DEBUG io.netty.util.Recycler - -Dio.netty.recycler.maxSharedCapacityFactor: 2
+2020-08-24 14:22:19.648 [nioEventLoopGroup-3-1] DEBUG io.netty.util.Recycler - -Dio.netty.recycler.linkCapacity: 16
+2020-08-24 14:22:19.648 [nioEventLoopGroup-3-1] DEBUG io.netty.util.Recycler - -Dio.netty.recycler.ratio: 8
+2020-08-24 14:22:19.658 [nioEventLoopGroup-3-1] DEBUG io.netty.buffer.AbstractByteBuf - -Dio.netty.buffer.checkAccessible: true
+2020-08-24 14:22:19.658 [nioEventLoopGroup-3-1] DEBUG io.netty.buffer.AbstractByteBuf - -Dio.netty.buffer.checkBounds: true
+2020-08-24 14:22:19.659 [nioEventLoopGroup-3-1] DEBUG io.netty.util.ResourceLeakDetectorFactory - Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@a1d22f0
+2020-08-24 14:26:58.129 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-08-24 14:26:58.133 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-08-24 14:31:12.264 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-08-24 14:31:12.268 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-08-24 14:37:18.418 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-08-24 14:37:18.422 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-08-24 14:38:34.640 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-08-24 14:38:34.644 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-08-24 14:45:04.062 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-08-24 14:45:04.066 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-08-24 14:49:30.772 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-08-24 14:49:30.776 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-08-24 14:49:44.139 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-08-24 14:49:44.143 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-08-24 15:02:56.025 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-08-24 15:02:56.029 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-08-24 15:03:58.964 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-08-24 15:03:58.968 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-08-24 15:08:06.492 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-08-24 15:08:06.496 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-08-24 15:15:40.641 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-08-24 15:15:40.645 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-08-24 15:15:58.093 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - NEW USER CREATED
+2020-08-25 08:20:25.728 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-08-25 08:20:25.733 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-08-25 08:20:50.749 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - NEW USER CREATED

@@ -1,8 +1,11 @@
 package com.geekbrains.krilov.clientNIO.Controllers;
 
+import com.geekbrains.krilov.clientNIO.Callback;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 public class ScreenController {
@@ -16,6 +19,7 @@ public class ScreenController {
     private Scene authScene;
     private Scene workScene;
     private Scene regScene;
+    private Scene currentScene;
 
     private ScreenController(Stage primaryStage) throws Exception {
         this.stage = primaryStage;
@@ -35,15 +39,47 @@ public class ScreenController {
         return screencontroller;
     }
 
-    public static synchronized ScreenController getInstance() throws Exception {
+    public static synchronized ScreenController getInstance() {
         return screencontroller;
     }
 
-    public void setRegScreen() {
-        stage.setScene(regScene);
+    public Scene getCurrentScene() {
+        return currentScene;
     }
 
-    public  void setAuthScreen() {
+    public void setRegScene() {
+        stage.setScene(regScene);
+        currentScene = regScene;
+    }
+
+    public  void setAuthScene() {
         stage.setScene(authScene);
+        currentScene = authScene;
+    }
+
+    public void setWorkScene() {
+        stage.setScene(workScene);
+        currentScene = workScene;
+    }
+
+    public void showErrorMessage(String errorMessage, Callback callback) {
+        Platform.runLater(() ->{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText(null);
+            alert.setContentText(errorMessage);
+            alert.showAndWait();
+            callback.callback();
+        });
+    }
+
+    public void showInfoMessage(String infoMessage) {
+        Platform.runLater(() ->{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("INFORMATION");
+            alert.setHeaderText(null);
+            alert.setContentText(infoMessage);
+            alert.showAndWait();
+        });
     }
 }

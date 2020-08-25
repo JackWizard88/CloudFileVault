@@ -13,7 +13,7 @@ public class ClientApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("CFV CloudFileVault");
-        ScreenController.getInstance(primaryStage).setAuthScreen();
+        ScreenController.getInstance(primaryStage).setAuthScene();
         ClientController.getInstance(PORT, ADDRESS).run();
         primaryStage.setOnCloseRequest(e -> System.exit(0));
         primaryStage.show();

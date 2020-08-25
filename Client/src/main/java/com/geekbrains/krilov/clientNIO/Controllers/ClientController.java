@@ -1,7 +1,9 @@
 package com.geekbrains.krilov.clientNIO.Controllers;
 
+import com.geekbrains.krilov.clientNIO.Callback;
 import com.geekbrains.krilov.clientNIO.Services.NIONetworkService;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -26,11 +28,15 @@ public class ClientController {
         return clientController;
     }
 
+    public NIONetworkService getNetworkService() {
+        return nns;
+    }
+
     public void run() {
 
         executorService.execute(() -> {
             try {
-                nns.connect();
+                nns.connectAndRead();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -39,6 +45,10 @@ public class ClientController {
     }
 
 
-    public void sendRegMessage(String login, String password) throws IOException {
+    public void sendRegMessage(String login, String password, Callback callback) throws IOException {
+        String data = "/reg " + login + " " + password;
+        ByteBuffer buf = ByteBuffer.wrap(data.getBytes());
+
+        nns.sendData(buf, () -> callback.callback());
     }
 }
