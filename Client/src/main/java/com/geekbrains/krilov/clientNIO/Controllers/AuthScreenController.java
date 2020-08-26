@@ -47,6 +47,7 @@ public class AuthScreenController implements Initializable {
             System.out.println("error sending auth message");
             showErrorMessage("connection lost");
         }
+//        ScreenController.getInstance().setWorkScene();
     }
 
     private void register() {

@@ -1,5 +1,6 @@
 package com.geekbrains.krilov.serverNetty;
 
+import com.geekbrains.krilov.ByteCommands;
 import com.geekbrains.krilov.serverNetty.AuthService.AuthService;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -45,12 +46,10 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
 
             if (isAuthorised) {
                 authKiller.interrupt();
+                ctx.writeAndFlush(ByteCommands.AUTH_ACCEPTED_COMMAND);
                 ctx.pipeline().addLast(new DataHandler(login));
-                String answer = "/auth " + "granted"; //todo заменить на байтовую команду??
-                ctx.writeAndFlush(ByteBuffer.wrap(answer.getBytes()));
             } else {
-                String answer = "/auth " + "denied"; //todo заменить на байтовую команду??
-                ctx.writeAndFlush(answer.getBytes());
+                ctx.writeAndFlush(ByteCommands.AUTH_DECLINED_COMMAND);
             }
         } else if (input.split(" ")[0].equals("/reg")) {
             System.out.println("incoming reg data...");

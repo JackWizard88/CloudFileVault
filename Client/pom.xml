@@ -10,5 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>Client</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>ru.geekbrains.krilov</groupId>
+            <artifactId>Common</artifactId>
+            <version>0.1</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 </project>

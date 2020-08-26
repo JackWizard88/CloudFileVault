@@ -29,6 +29,7 @@ public class ScreenController {
 
         this.regScene = new Scene(regScreen, 300, 250);
         this.authScene = new Scene(authScreen, 300, 250);
+        this.workScene = new Scene(workScreen);
     }
 
     public static synchronized ScreenController getInstance(Stage primaryStage) throws Exception {
@@ -48,17 +49,17 @@ public class ScreenController {
     }
 
     public void setRegScene() {
-        stage.setScene(regScene);
+        Platform.runLater(() -> stage.setScene(regScene));
         currentScene = regScene;
     }
 
     public  void setAuthScene() {
-        stage.setScene(authScene);
+        Platform.runLater(() -> stage.setScene(authScene));
         currentScene = authScene;
     }
 
     public void setWorkScene() {
-        stage.setScene(workScene);
+        Platform.runLater(() -> stage.setScene(workScene));
         currentScene = workScene;
     }
 
