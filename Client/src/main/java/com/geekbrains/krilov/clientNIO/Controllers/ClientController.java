@@ -1,5 +1,6 @@
 package com.geekbrains.krilov.clientNIO.Controllers;
 
+import com.geekbrains.krilov.ByteCommands;
 import com.geekbrains.krilov.clientNIO.Callback;
 import com.geekbrains.krilov.clientNIO.Services.NIONetworkService;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class ClientController {
 
         executorService.execute(() -> {
             try {
-                nns.connectAndRead();
+                nns.connect();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -69,8 +70,24 @@ public class ClientController {
     }
 
     public void sendAuthMessage(String login, String password) throws IOException {
-        String data = AUTH_COMMAND + login + " " + password;
-        ByteBuffer buf = ByteBuffer.wrap(data.getBytes());
-        nns.sendData(buf, null);
+        new Thread(() -> {
+            String data = AUTH_COMMAND + login + " " + password;
+            ByteBuffer buf = ByteBuffer.wrap(data.getBytes());
+            nns.sendData(buf, null);
+
+            byte answer = 0;
+            try {
+                answer = ClientController.getInstance().getNetworkService().getIn().readByte();
+            } catch (IOException e) {
+                ScreenController.getInstance().showErrorMessage("Сервер разорвал соединение", () -> System.exit(0));
+            }
+            if (answer == ByteCommands.AUTH_ACCEPTED_COMMAND && currentState == Status.DEMAND_REGISTRATION) {
+                currentState = Status.REGISTERED;
+                ScreenController.getInstance().setWorkScene();
+            } else if (answer == ByteCommands.AUTH_DECLINED_COMMAND) {
+                ScreenController.getInstance().showErrorMessage("Ошибка авторизации. Неверные данные", null);
+            }
+        }).start();
+
     }
 }

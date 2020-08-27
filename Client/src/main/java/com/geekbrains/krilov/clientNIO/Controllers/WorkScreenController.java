@@ -73,8 +73,8 @@ public class WorkScreenController {
             }
         });
         fileSizeColumn.setPrefWidth(120);
-        updateLocalList(root);
-        updateServerList(root);
+//        updateLocalList(root);
+//        updateServerList(root);
     }
 
     private void updateServerList(Path path) {

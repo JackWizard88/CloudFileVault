@@ -26,7 +26,6 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
             switch (commandByte) {
                 case ByteCommands.GET_FILE_COMMAND:
                     System.out.println("STATE: Receiving file from " + login);
-
                     break;
                 case ByteCommands.SEND_FILE_COMMAND:
                     System.out.println("STATE: Sending file to " + login);
@@ -34,11 +33,13 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
                     break;
                 case ByteCommands.DELETE_FILE_COMMAND:
                     System.out.println("STATE: Deleting file by " + login);
-
                     break;
                 case ByteCommands.GET_SERVER_FILE_LIST_COMMAND:
                     System.out.println("STATE: Sending fileList to " + login);
                     sendFileList(ctx, msg);
+                    break;
+                default:
+                    System.out.println("unknown command byte");
                     break;
             }
         }

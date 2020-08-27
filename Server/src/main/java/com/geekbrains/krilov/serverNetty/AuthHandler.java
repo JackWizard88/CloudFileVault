@@ -29,27 +29,31 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ByteBuf buf = (ByteBuf) msg;
-        String input = buf.toString(Charset.forName("utf-8"));
 
+        ByteBuf buf = (ByteBuf) msg;
         if (isAuthorised) {
-            ctx.fireChannelRead(input);
+            ctx.fireChannelRead(buf);
             return;
         }
 
-        if (input.split(" ")[0].equals("/auth")) {      //todo заменить на байтовую команду??
+        String input = buf.toString(Charset.forName("utf-8"));
+
+        if (input.split(" ")[0].equals("/auth")) {  //todo заменить на байтовую команду??
             String login = input.split(" ")[1];
             this.login = login;
             String password = input.split(" ")[2];
-
+            ByteBuffer answer = ByteBuffer.allocate(1);
             isAuthorised = authService.logIn(login, password);
 
             if (isAuthorised) {
                 authKiller.interrupt();
-                ctx.writeAndFlush(ByteCommands.AUTH_ACCEPTED_COMMAND);
+                answer.put(ByteCommands.AUTH_ACCEPTED_COMMAND);
+                ctx.writeAndFlush(answer);
+                System.out.println(login + " auth accepted");
                 ctx.pipeline().addLast(new DataHandler(login));
             } else {
                 ctx.writeAndFlush(ByteCommands.AUTH_DECLINED_COMMAND);
+                System.out.println(login + " auth declined");
             }
         } else if (input.split(" ")[0].equals("/reg")) {
             System.out.println("incoming reg data...");
@@ -63,6 +67,7 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         authService.logOut(login);
+        authKiller.interrupt();
     }
 
     private void connectionTimeOutKiller(ChannelHandlerContext ctx) {
@@ -73,10 +78,9 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
 
                 ctx.close();
             } catch (InterruptedException e) {
-                System.out.println("Auth succeeded. TimeOut-Killer Interrupted");
+                System.out.println("TimeOut-Killer Interrupted");
             }
         });
-
         authKiller.start();
     }
 

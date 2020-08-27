@@ -34,7 +34,7 @@ public class BaseAuthService implements AuthService {
 
             if (rs.getBoolean(4)) return false; //запрет двойного входа
 
-            else if (rs.getString(3).equals(password)) {
+            else if (rs.getString(3).equals(password.trim())) {
                 successfulAuth = true;
                 String sql1 = "UPDATE userData SET Logged = true WHERE Login = ?";
                 PreparedStatement statement1 = sqlconnection.prepareStatement(sql1);
