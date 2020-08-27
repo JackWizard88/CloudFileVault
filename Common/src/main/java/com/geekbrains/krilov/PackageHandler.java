@@ -1,8 +1,9 @@
 package com.geekbrains.krilov;
 
 import io.netty.buffer.ByteBuf;
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
+
+import java.io.*;
+import java.util.List;
 
 public class PackageHandler {
 
@@ -21,7 +22,7 @@ public class PackageHandler {
         while (buf.readableBytes() > 0) {
             if (currentState == State.IDLE) {
                 byte readed = buf.readByte();
-                if (readed == (byte) 25) {
+                if (readed == ByteCommands.GET_FILE_COMMAND) {
                     currentState = State.NAME_LENGTH;
                     receivedFileLength = 0L;
                     System.out.println("STATE: Start file receiving");
@@ -81,6 +82,7 @@ public class PackageHandler {
     public static void DeleteFile(Object msg, String login) {
     }
 
-    public static void sendList(Object msg, String login) {
+    public static List<FileInfo> getFileList(Object msg, String login) {
+        return null;
     }
 }

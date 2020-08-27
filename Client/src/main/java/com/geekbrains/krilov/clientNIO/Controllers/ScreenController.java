@@ -27,8 +27,8 @@ public class ScreenController {
         this.workScreen = FXMLLoader.load(getClass().getResource("/fxml/WorkScreen.fxml"));
         this.regScreen = FXMLLoader.load(getClass().getResource("/fxml/RegScreen.fxml"));
 
-        this.regScene = new Scene(regScreen, 300, 250);
-        this.authScene = new Scene(authScreen, 300, 250);
+        this.regScene = new Scene(regScreen);
+        this.authScene = new Scene(authScreen);
         this.workScene = new Scene(workScreen);
     }
 
