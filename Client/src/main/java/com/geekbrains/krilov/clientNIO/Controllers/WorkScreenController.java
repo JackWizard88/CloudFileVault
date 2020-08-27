@@ -12,7 +12,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class WorkScreenController {
+public class WorkScreenController extends BaseController {
 
     private Path root = Paths.get(".");
 
@@ -26,10 +26,10 @@ public class WorkScreenController {
     private TableView serverTable;
 
     @FXML
-    private TextField localPathFiled;
+    private TextField localPathField;
 
     @FXML
-    private TextField serverPathFiled;
+    private TextField serverPathField;
 
     @FXML
     private MenuItem menuItemExit;
@@ -68,13 +68,26 @@ public class WorkScreenController {
                     if (item == -1L) {
                         text = "[DIR]";
                     }
+                    if (item == -2L) {
+                        text = "[UP]";
+                    }
                     setText(text);
                 }
             }
         });
         fileSizeColumn.setPrefWidth(120);
-//        updateLocalList(root);
-//        updateServerList(root);
+
+        TableColumn<FileInfo, String> fileDateColumn = new TableColumn<>("Дата изменения");
+        fileDateColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getLastModified()));
+        fileDateColumn.setPrefWidth(120);
+
+        localTable.getColumns().addAll(fileNameColumn, fileSizeColumn, fileDateColumn);
+        localTable.getSortOrder().add(fileTypeColumn);
+    }
+
+    public void update() {
+        updateLocalList(root);
+        updateServerList(root);
     }
 
     private void updateServerList(Path path) {
@@ -83,8 +96,9 @@ public class WorkScreenController {
 
     public void updateLocalList(Path path) {
         try {
-            localPathFiled.setText(path.normalize().toAbsolutePath().toString());
+            localPathField.setText(path.normalize().toAbsolutePath().toString());
             localTable.getItems().clear();
+            localTable.getItems().addAll(new FileInfo("..", -2L));
             localTable.getItems().addAll(Files.list(path).filter(Files::isReadable).map(FileInfo::new).collect(Collectors.toList()));
             localTable.sort();
         } catch (IOException e) {

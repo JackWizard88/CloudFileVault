@@ -7,7 +7,7 @@ import javafx.scene.control.*;
 import java.io.IOException;
 
 
-public class RegScreenController {
+public class RegScreenController extends BaseController {
 
     @FXML
     private TextField loginTextField;
@@ -84,4 +84,8 @@ public class RegScreenController {
         });
     }
 
+    @Override
+    public void update() {
+
+    }
 }

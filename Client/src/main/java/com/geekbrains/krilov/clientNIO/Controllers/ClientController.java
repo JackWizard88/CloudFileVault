@@ -83,7 +83,11 @@ public class ClientController {
             }
             if (answer == ByteCommands.AUTH_ACCEPTED_COMMAND && currentState == Status.DEMAND_REGISTRATION) {
                 currentState = Status.REGISTERED;
-                ScreenController.getInstance().setWorkScene();
+                try {
+                    ScreenController.getInstance().setWorkScene();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else if (answer == ByteCommands.AUTH_DECLINED_COMMAND) {
                 ScreenController.getInstance().showErrorMessage("Ошибка авторизации. Неверные данные", null);
             }

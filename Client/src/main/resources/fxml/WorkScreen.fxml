@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.krilov.clientNIO.Controllers.WorkScreenController">
+<BorderPane minHeight="400.0" minWidth="600.0" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.krilov.clientNIO.Controllers.WorkScreenController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -25,12 +25,21 @@
    <center>
       <HBox spacing="5.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane>
-               <HBox.margin>
-                  <Insets left="5.0" top="5.0" />
-               </HBox.margin>
-            </AnchorPane>
-            <VBox alignment="CENTER" minWidth="50.0" prefWidth="80.0" spacing="20.0">
+            <VBox>
+               <children>
+                  <TextField fx:id="localPathField" editable="false">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TableView fx:id="localTable" prefWidth="550.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" fillWidth="false" minWidth="50.0" prefWidth="80.0" spacing="20.0" HBox.hgrow="ALWAYS">
                <children>
                   <Button fx:id="btnCopyToServer" mnemonicParsing="false" text="&gt;&gt;" />
                   <Button fx:id="btnCopyFromServer" mnemonicParsing="false" text="&lt;&lt;" />
@@ -43,15 +52,27 @@
                   <Insets top="5.0" />
                </padding>
             </VBox>
-            <AnchorPane>
-               <HBox.margin>
-                  <Insets right="5.0" top="5.0" />
-               </HBox.margin>
-            </AnchorPane>
+            <VBox>
+               <children>
+                  <TextField editable="false">
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TableView fx:id="serverTable" prefWidth="550.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
+         <BorderPane.margin>
+            <Insets bottom="5.0" top="5.0" />
+         </BorderPane.margin>
       </HBox>
    </center>
    <bottom>
@@ -62,38 +83,4 @@
          </children>
       </AnchorPane>
    </bottom>
-   <left>
-      <VBox BorderPane.alignment="CENTER">
-         <children>
-            <TextField fx:id="localPathField">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </TextField>
-            <TableView fx:id="localTable" prefWidth="500.0" VBox.vgrow="ALWAYS">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-            </TableView>
-         </children>
-      </VBox>
-   </left>
-   <right>
-      <VBox BorderPane.alignment="CENTER">
-         <children>
-            <TextField>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </TextField>
-            <TableView fx:id="serverTable" prefWidth="500.0" VBox.vgrow="ALWAYS">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-            </TableView>
-         </children>
-      </VBox>
-   </right>
 </BorderPane>

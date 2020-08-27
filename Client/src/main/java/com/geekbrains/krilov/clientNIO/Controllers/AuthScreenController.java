@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AuthScreenController implements Initializable {
+public class AuthScreenController extends BaseController implements Initializable {
 
     @FXML
     private TextField loginText;
@@ -34,10 +34,16 @@ public class AuthScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         buttonRegister.setOnAction(e -> register());
         buttonCancel.setOnAction(e -> System.exit(0));
-        buttonOk.setOnAction(e -> sendAuthData());
+        buttonOk.setOnAction(e -> {
+            try {
+                sendAuthData();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
     }
 
-    private void sendAuthData() {
+    private void sendAuthData() throws IOException {
         ClientController.getInstance().setCurrentState(ClientController.Status.DEMAND_REGISTRATION);
         String login = loginText.getText().trim();
         String pass = passwordText.getText().trim();
@@ -47,7 +53,8 @@ public class AuthScreenController implements Initializable {
             System.out.println("error sending auth message");
             showErrorMessage("connection lost");
         }
-//        ScreenController.getInstance().setWorkScene();
+        ScreenController.getInstance().setWorkScene();
+        Platform.runLater(() -> ScreenController.getInstance().getCurrentController().update());
     }
 
     private void register() {
@@ -76,5 +83,9 @@ public class AuthScreenController implements Initializable {
             alert.setContentText(infoMessage);
             alert.showAndWait();
         });
+    }
+
+    @Override
+    public void update() {
     }
 }
