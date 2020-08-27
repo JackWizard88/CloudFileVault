@@ -9,21 +9,23 @@ import java.util.stream.Collectors;
 import com.geekbrains.krilov.FileInfo;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 public class WorkScreenController extends BaseController {
 
     private Path root = Paths.get(".");
+    private Path currentPath = root;
 
     @FXML
     private URL location;
 
     @FXML
-    private TableView localTable;
+    private TableView<FileInfo> localTable;
 
     @FXML
-    private TableView serverTable;
+    private TableView<FileInfo> serverTable;
 
     @FXML
     private TextField localPathField;
@@ -38,6 +40,12 @@ public class WorkScreenController extends BaseController {
     private Button btnCopyToServer;
 
     @FXML
+    private Button btnLocalUp;
+
+    @FXML
+    private Button btnServerUp;
+
+    @FXML
     private Button btnCopyFromServer;
 
     @FXML
@@ -45,6 +53,15 @@ public class WorkScreenController extends BaseController {
 
     @FXML
     void initialize() {
+
+        localTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 & getSelectedFilename() != null) {
+                Path path = Paths.get(localPathField.getText()).resolve(localTable.getSelectionModel().getSelectedItem().getFilename());
+                if (Files.isDirectory(path)) {
+                    updateLocalList(path);
+                }
+            }
+        });
 
         TableColumn<FileInfo, String> fileTypeColumn = new TableColumn<>();
         fileTypeColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getType().getName()));
@@ -68,9 +85,6 @@ public class WorkScreenController extends BaseController {
                     if (item == -1L) {
                         text = "[DIR]";
                     }
-                    if (item == -2L) {
-                        text = "[UP]";
-                    }
                     setText(text);
                 }
             }
@@ -82,7 +96,7 @@ public class WorkScreenController extends BaseController {
         fileDateColumn.setPrefWidth(120);
 
         localTable.getColumns().addAll(fileNameColumn, fileSizeColumn, fileDateColumn);
-        localTable.getSortOrder().add(fileTypeColumn);
+        localTable.getSortOrder().add(fileSizeColumn);
     }
 
     public void update() {
@@ -96,9 +110,9 @@ public class WorkScreenController extends BaseController {
 
     public void updateLocalList(Path path) {
         try {
+            currentPath = path;
             localPathField.setText(path.normalize().toAbsolutePath().toString());
             localTable.getItems().clear();
-            localTable.getItems().addAll(new FileInfo("..", -2L));
             localTable.getItems().addAll(Files.list(path).filter(Files::isReadable).map(FileInfo::new).collect(Collectors.toList()));
             localTable.sort();
         } catch (IOException e) {
@@ -119,5 +133,21 @@ public class WorkScreenController extends BaseController {
         //todo
     }
 
+    public void localUp(ActionEvent actionEvent) {
+        Path upperPath = Paths.get(localPathField.getText()).getParent();
+        if (upperPath != null) {
+            updateLocalList(upperPath);
+        }
+    }
+
+    public String getSelectedFilename() {
+        if (!localTable.isFocused()) {
+            return null;
+        }
+        if (localTable.getSelectionModel().getSelectedItem() == null) {
+            return null;
+        }
+        return localTable.getSelectionModel().getSelectedItem().getFilename();
+    }
 }
 
