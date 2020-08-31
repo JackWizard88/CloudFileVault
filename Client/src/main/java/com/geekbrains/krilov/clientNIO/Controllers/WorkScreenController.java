@@ -5,6 +5,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.stream.Collectors;
 import com.geekbrains.krilov.FileInfo;
 import javafx.beans.property.SimpleObjectProperty;
@@ -16,7 +17,8 @@ import javafx.scene.control.*;
 public class WorkScreenController extends BaseController {
 
     private Path root = Paths.get(".");
-    private Path currentPath = root;
+    private Path currentClientPath = root;
+    private Path currentServerPath = root;
 
     @FXML
     private URL location;
@@ -63,10 +65,6 @@ public class WorkScreenController extends BaseController {
             }
         });
 
-        TableColumn<FileInfo, String> fileTypeColumn = new TableColumn<>();
-        fileTypeColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getType().getName()));
-        fileTypeColumn.setPrefWidth(24);
-
         TableColumn<FileInfo, String> fileNameColumn = new TableColumn<>("Имя");
         fileNameColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getFilename()));
         fileNameColumn.setPrefWidth(240);
@@ -97,23 +95,69 @@ public class WorkScreenController extends BaseController {
 
         localTable.getColumns().addAll(fileNameColumn, fileSizeColumn, fileDateColumn);
         localTable.getSortOrder().add(fileSizeColumn);
+
+
+        TableColumn<FileInfo, String> fileNameColumn1 = new TableColumn<>("Имя");
+        fileNameColumn1.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getFilename()));
+        fileNameColumn1.setPrefWidth(240);
+
+        TableColumn<FileInfo, Long> fileSizeColumn1 = new TableColumn<>("Размер");
+        fileSizeColumn1.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getSize()));
+        fileSizeColumn1.setCellFactory(column -> new TableCell<FileInfo, Long>() {
+            @Override
+            protected void updateItem(Long item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    String text = String.format("%,d bytes", item);
+                    if (item == -1L) {
+                        text = "[DIR]";
+                    }
+                    setText(text);
+                }
+            }
+        });
+        fileSizeColumn.setPrefWidth(120);
+
+        TableColumn<FileInfo, String> fileDateColumn1 = new TableColumn<>("Дата изменения");
+        fileDateColumn1.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getLastModified()));
+        fileDateColumn1.setPrefWidth(120);
+
+        serverTable.getColumns().addAll(fileNameColumn1, fileSizeColumn1, fileDateColumn1);
     }
 
     public void update() {
-        updateLocalList(root);
-        updateServerList(root);
+        updateLocalList(currentClientPath);
+        new Thread(() -> {
+            updateServerList(currentServerPath);
+        }).start();
     }
 
     private void updateServerList(Path path) {
-        ClientController.getInstance().getNetworkService().getServerFileList(path);
+        try {
+            currentServerPath = Paths.get(ClientController.getInstance().getServerRootPath());
+            serverPathField.setText(currentServerPath.toString());
+            List<FileInfo> list = ClientController.getInstance().getServerFileList(path);
+            if (list == null) {
+                ScreenController.getInstance().showErrorMessage("не удалось обновить список файлов", null);
+                return;
+            }
+            serverTable.getItems().clear();
+            serverTable.getItems().addAll(list);
+            serverTable.sort();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void updateLocalList(Path path) {
         try {
-            currentPath = path;
-            localPathField.setText(path.normalize().toAbsolutePath().toString());
+            currentClientPath = path;
+            localPathField.setText(currentClientPath.normalize().toAbsolutePath().toString());
             localTable.getItems().clear();
-            localTable.getItems().addAll(Files.list(path).filter(Files::isReadable).map(FileInfo::new).collect(Collectors.toList()));
+            localTable.getItems().addAll(Files.list(currentClientPath).filter(Files::isReadable).map(FileInfo::new).collect(Collectors.toList()));
             localTable.sort();
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Не удалось обновить список файлов", ButtonType.OK);
@@ -148,6 +192,10 @@ public class WorkScreenController extends BaseController {
             return null;
         }
         return localTable.getSelectionModel().getSelectedItem().getFilename();
+    }
+
+    public void exit(ActionEvent actionEvent) {
+        System.exit(0);
     }
 }
 

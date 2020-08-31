@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
 
 public class ScreenController {
 
@@ -44,8 +45,8 @@ public class ScreenController {
         return screencontroller;
     }
 
-    public Scene getCurrentScene() {
-        return currentScene;
+    public WorkScreenController getWorkScreenController() {
+        return workLoader.getController();
     }
 
     public BaseController getCurrentController() {
@@ -54,7 +55,7 @@ public class ScreenController {
 
     public void setRegScene() throws IOException {
         if (regScreen == null) {
-            regLoader = new FXMLLoader(getClass().getResource("/fxml/WorkScreen.fxml"));
+            regLoader = new FXMLLoader(getClass().getResource("/fxml/RegScreen.fxml"));
             this.regScreen = regLoader.load();
             this.regScene = new Scene(regScreen);
         }
@@ -92,7 +93,9 @@ public class ScreenController {
             alert.setHeaderText(null);
             alert.setContentText(errorMessage);
             alert.showAndWait();
-            callback.callback();
+            if (callback != null) {
+                callback.callback();
+            }
         });
     }
 

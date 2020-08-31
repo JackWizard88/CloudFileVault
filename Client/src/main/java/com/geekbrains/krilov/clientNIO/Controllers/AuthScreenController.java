@@ -7,10 +7,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 
 public class AuthScreenController extends BaseController implements Initializable {
 
@@ -34,16 +34,10 @@ public class AuthScreenController extends BaseController implements Initializabl
     public void initialize(URL location, ResourceBundle resources) {
         buttonRegister.setOnAction(e -> register());
         buttonCancel.setOnAction(e -> System.exit(0));
-        buttonOk.setOnAction(e -> {
-            try {
-                sendAuthData();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        });
+        buttonOk.setOnAction(e -> sendAuthData());
     }
 
-    private void sendAuthData() throws IOException {
+    private void sendAuthData() {
         ClientController.getInstance().setCurrentState(ClientController.Status.DEMAND_REGISTRATION);
         String login = loginText.getText().trim();
         String pass = passwordText.getText().trim();
@@ -53,8 +47,6 @@ public class AuthScreenController extends BaseController implements Initializabl
             System.out.println("error sending auth message");
             showErrorMessage("connection lost");
         }
-        ScreenController.getInstance().setWorkScene();
-        Platform.runLater(() -> ScreenController.getInstance().getCurrentController().update());
     }
 
     private void register() {

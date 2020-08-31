@@ -1,12 +1,20 @@
 package com.geekbrains.krilov.clientNIO.Services;
 
 import com.geekbrains.krilov.ByteCommands;
+import com.geekbrains.krilov.FileInfo;
 import com.geekbrains.krilov.clientNIO.Callback;
+import com.geekbrains.krilov.clientNIO.Controllers.ScreenController;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import javafx.application.Platform;
+
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.List;
 
 public class NIONetworkService {
 
@@ -45,7 +53,7 @@ public class NIONetworkService {
             try {
                 channel.write(buf);
             } catch (IOException e) {
-                e.printStackTrace();
+                ScreenController.getInstance().showErrorMessage("Сервер недоступен", null);
             } finally {
                 if (callback != null) {
                     callback.callback();
@@ -55,16 +63,5 @@ public class NIONetworkService {
     }
 
 
-    public void getServerFileList(Path path) {
 
-        int bufSize = 1 + 4 + path.toString().length();
-        ByteBuffer buf = ByteBuffer.allocate(bufSize);
-
-        buf.put(ByteCommands.GET_SERVER_FILE_LIST_COMMAND);
-        buf.putInt(path.toString().length());
-        buf.put(path.toString().getBytes());
-        buf.flip();
-
-        sendData(buf, null);
-    }
 }

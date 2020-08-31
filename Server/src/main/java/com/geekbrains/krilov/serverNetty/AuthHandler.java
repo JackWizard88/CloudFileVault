@@ -1,11 +1,14 @@
 package com.geekbrains.krilov.serverNetty;
 
 import com.geekbrains.krilov.ByteCommands;
+import com.geekbrains.krilov.FileUtility;
 import com.geekbrains.krilov.serverNetty.AuthService.AuthService;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
@@ -42,17 +45,18 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
             String login = input.split(" ")[1];
             this.login = login;
             String password = input.split(" ")[2];
-            ByteBuffer answer = ByteBuffer.allocate(1);
+            ByteBuf answer = Unpooled.buffer();
             isAuthorised = authService.logIn(login, password);
 
             if (isAuthorised) {
                 authKiller.interrupt();
-                answer.put(ByteCommands.AUTH_ACCEPTED_COMMAND);
+                answer.writeByte(ByteCommands.AUTH_ACCEPTED_COMMAND);
                 ctx.writeAndFlush(answer);
                 System.out.println(login + " auth accepted");
                 ctx.pipeline().addLast(new DataHandler(login));
             } else {
-                ctx.writeAndFlush(ByteCommands.AUTH_DECLINED_COMMAND);
+                answer.writeByte(ByteCommands.AUTH_DECLINED_COMMAND);
+                ctx.writeAndFlush(answer);
                 System.out.println(login + " auth declined");
             }
         } else if (input.split(" ")[0].equals("/reg")) {
@@ -60,6 +64,11 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
             String login = input.split(" ")[1];
             String password = input.split(" ")[2];
             authService.registerNewUser(login, password);
+            try {
+                FileUtility.createDirectory("./vault/" + login);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }

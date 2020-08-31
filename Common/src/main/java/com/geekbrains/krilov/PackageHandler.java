@@ -82,7 +82,5 @@ public class PackageHandler {
     public static void DeleteFile(Object msg, String login) {
     }
 
-    public static List<FileInfo> getFileList(Object msg, String login) {
-        return null;
-    }
+
 }
