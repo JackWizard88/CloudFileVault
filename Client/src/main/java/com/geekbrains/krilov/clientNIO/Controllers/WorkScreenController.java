@@ -18,7 +18,7 @@ public class WorkScreenController extends BaseController {
 
     private Path root = Paths.get(".");
     private Path currentClientPath = root;
-    private Path currentServerPath = root;
+    private Path currentServerPath;
 
     @FXML
     private URL location;
@@ -129,16 +129,21 @@ public class WorkScreenController extends BaseController {
     }
 
     public void update() {
-        updateLocalList(currentClientPath);
         new Thread(() -> {
-            updateServerList(currentServerPath);
+            try {
+                updateLocalList(currentClientPath);
+                currentServerPath = Paths.get(ClientController.getInstance().getServerRootPath());
+                serverPathField.setText(currentServerPath.toString());
+                updateServerList(currentServerPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }).start();
     }
 
     private void updateServerList(Path path) {
+
         try {
-            currentServerPath = Paths.get(ClientController.getInstance().getServerRootPath());
-            serverPathField.setText(currentServerPath.toString());
             List<FileInfo> list = ClientController.getInstance().getServerFileList(path);
             if (list == null) {
                 ScreenController.getInstance().showErrorMessage("не удалось обновить список файлов", null);

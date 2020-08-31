@@ -105,7 +105,7 @@ public class ClientController {
     }
 
     public String getServerRootPath() throws IOException {
-
+        System.out.print("Getting Root Path: ");
         //отправляем запрос на путь корневого каталога
         ByteBuffer buf = ByteBuffer.allocate(1);
         buf.put(ByteCommands.SERVER_ROOT_PATH_COMMAND);
@@ -123,12 +123,14 @@ public class ClientController {
                 readByte += nns.getIn().read(pathBuf);
             }
             rootPath = new String(pathBuf, StandardCharsets.UTF_8 );
+            System.out.println(rootPath);
         }
         return rootPath;
 
     }
 
     public List<FileInfo> getServerFileList(Path path) throws IOException {
+        System.out.println("Getting fileList for" + path.toString());
         //отправляем запрос списка файлов на сервер
         int bufSize = 1 + 4 + path.toString().length();
         ByteBuffer buf = ByteBuffer.allocate(bufSize);

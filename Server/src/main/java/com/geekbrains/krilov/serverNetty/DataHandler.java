@@ -80,19 +80,9 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
         //получение директории запроса списка файлов
         int pathLength = buf.readInt();
         byte[] fileListBuf = new byte[pathLength];
-        int readByte = 0;
-        while (readByte < pathLength) {
-            buf.readBytes(fileListBuf);
-            readByte++;
-        }
+        buf.readBytes(fileListBuf);
+
         String pathName = new String(fileListBuf, StandardCharsets.UTF_8);
-
-        if(pathName.equals(".")) {
-            pathName = homeDir;
-        }
-
-        //отправить текущий каталог
-
 
         //запрос списка файлов по указанному пути и упаковка в json
         String fileList = getFileListJson(pathName);
