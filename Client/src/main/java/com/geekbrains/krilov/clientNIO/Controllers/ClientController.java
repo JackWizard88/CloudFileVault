@@ -159,4 +159,16 @@ public class ClientController {
         return fileInfoList;
     }
 
+    public void deleteFile(Path path, Callback callback) {
+        System.out.println("Delete file" + path.toString());
+        int bufSize = 1 + 4 + path.toString().length();
+        ByteBuffer buf = ByteBuffer.allocate(bufSize);
+        buf.put(ByteCommands.DELETE_FILE_COMMAND);
+        buf.putInt(path.toString().length());
+        buf.put(path.toString().getBytes());
+        buf.flip();
+        nns.sendData(buf, () -> callback.callback());
+
+    }
+
 }

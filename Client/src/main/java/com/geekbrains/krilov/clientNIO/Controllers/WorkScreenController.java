@@ -178,10 +178,6 @@ public class WorkScreenController extends BaseController {
         //todo
     }
 
-    private void deleteFile(Path path) {
-        //todo
-    }
-
     public void localUp(ActionEvent actionEvent) {
         Path upperPath = Paths.get(localPathField.getText()).getParent();
         if (upperPath != null) {
@@ -190,17 +186,30 @@ public class WorkScreenController extends BaseController {
     }
 
     public String getSelectedFilename() {
-        if (!localTable.isFocused()) {
-            return null;
+        String fileName = null;
+        if (localTable.isFocused()) {
+            if (localTable.getSelectionModel().getSelectedItem() != null) {
+                fileName = localTable.getSelectionModel().getSelectedItem().getFilename();
+            }
+        } else if (serverTable.isFocused()) {
+            if (serverTable.getSelectionModel().getSelectedItem() != null) {
+                fileName = serverTable.getSelectionModel().getSelectedItem().getFilename();
+            }
         }
-        if (localTable.getSelectionModel().getSelectedItem() == null) {
-            return null;
-        }
-        return localTable.getSelectionModel().getSelectedItem().getFilename();
+
+        return fileName;
     }
 
     public void exit(ActionEvent actionEvent) {
         System.exit(0);
+    }
+
+    public void deleteFile(ActionEvent actionEvent) {
+        Path path = Paths.get(currentServerPath.toString() + "/"+ getSelectedFilename());
+        ClientController.getInstance().deleteFile(path, () -> {
+            ScreenController.getInstance().showInfoMessage("Файл удален");
+            updateServerList(currentServerPath);
+        });
     }
 }
 

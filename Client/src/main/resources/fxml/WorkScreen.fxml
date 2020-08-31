@@ -50,8 +50,7 @@
                <children>
                   <Button fx:id="btnCopyToServer" focusTraversable="false" mnemonicParsing="false" text="&gt;&gt;" />
                   <Button fx:id="btnCopyFromServer" focusTraversable="false" mnemonicParsing="false" text="&lt;&lt;" />
-                  <Button fx:id="btnDel" focusTraversable="false" mnemonicParsing="false" text="Del" />
-                  <Button fx:id="btnRefresh" focusTraversable="false" layoutX="30.0" layoutY="405.0" mnemonicParsing="false" onAction="#update" text="Ref" />
+                  <Button fx:id="btnDel" focusTraversable="false" mnemonicParsing="false" text="Del" onAction="#deleteFile" />
                </children>
                <HBox.margin>
                   <Insets top="5.0" />

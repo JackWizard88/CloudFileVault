@@ -49,6 +49,7 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
                     break;
                 case ByteCommands.DELETE_FILE_COMMAND:
                     System.out.println("STATE: Deleting file by " + login);
+                    deleteFile(ctx, buf);
                     break;
                 case ByteCommands.GET_SERVER_FILE_LIST_COMMAND:
                     System.out.println("STATE: Sending fileList to " + login);
@@ -96,9 +97,19 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
         tmp.clear();
     }
 
-    private void deleteFile(ChannelHandlerContext ctx, Object msg) {
-        PackageHandler.DeleteFile(msg, login);
+    private void deleteFile(ChannelHandlerContext ctx, ByteBuf buf) {
+        int pathLength = buf.readInt();
+        byte[] filePathBuf = new byte[pathLength];
+        buf.readBytes(filePathBuf);
+        String pathName = new String(filePathBuf, StandardCharsets.UTF_8);
+
+        try {
+            Files.delete(Paths.get(pathName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     private void getFile(ChannelHandlerContext ctx, ByteBuf buf) throws Exception {
         PackageHandler.receiveFile(buf, login);
