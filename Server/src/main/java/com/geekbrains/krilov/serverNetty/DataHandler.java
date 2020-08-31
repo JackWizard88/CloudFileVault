@@ -85,6 +85,10 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
 
         String pathName = new String(fileListBuf, StandardCharsets.UTF_8);
 
+        if (pathName.equals(Paths.get(homeDir).getParent().toString())) {
+            pathName = homeDir;
+        }
+
         //запрос списка файлов по указанному пути и упаковка в json
         String fileList = getFileListJson(pathName);
 

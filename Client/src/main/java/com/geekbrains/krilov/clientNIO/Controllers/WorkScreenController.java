@@ -56,11 +56,22 @@ public class WorkScreenController extends BaseController {
     @FXML
     void initialize() {
 
+        btnServerUp.setOnAction(e -> serverUp(e));
+
         localTable.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 & getSelectedFilename() != null) {
                 Path path = Paths.get(localPathField.getText()).resolve(localTable.getSelectionModel().getSelectedItem().getFilename());
                 if (Files.isDirectory(path)) {
                     updateLocalList(path);
+                }
+            }
+        });
+
+        serverTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 & getSelectedFilename() != null) {
+                Path path = Paths.get(serverPathField.getText()).resolve(serverTable.getSelectionModel().getSelectedItem().getFilename());
+                if (Files.isDirectory(path)) {
+                    updateServerList(path);
                 }
             }
         });
@@ -185,6 +196,14 @@ public class WorkScreenController extends BaseController {
         }
     }
 
+    public void serverUp(ActionEvent actionEvent) {
+        Path upperPath = Paths.get(serverPathField.getText()).getParent();
+        if (upperPath != null) {
+            updateServerList(upperPath);
+        }
+
+    }
+
     public String getSelectedFilename() {
         String fileName = null;
         if (localTable.isFocused()) {
@@ -205,11 +224,23 @@ public class WorkScreenController extends BaseController {
     }
 
     public void deleteFile(ActionEvent actionEvent) {
-        Path path = Paths.get(currentServerPath.toString() + "/"+ getSelectedFilename());
-        ClientController.getInstance().deleteFile(path, () -> {
-            ScreenController.getInstance().showInfoMessage("Файл удален");
-            updateServerList(currentServerPath);
-        });
+        Path path;
+        if  (serverTable.isFocused()) {
+            path = Paths.get(currentServerPath.toString() + "/"+ getSelectedFilename());
+            ClientController.getInstance().deleteFile(path, () -> {
+                ScreenController.getInstance().showInfoMessage("Файл удален");
+                updateServerList(currentServerPath);
+            });
+        } else if (localTable.isFocused()) {
+            path = Paths.get(currentClientPath.toString() + "/"+ getSelectedFilename());
+            try {
+                Files.delete(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                updateLocalList(currentClientPath);
+            }
+        }
     }
 }
 
