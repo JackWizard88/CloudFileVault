@@ -183,63 +183,67 @@ public class ClientController {
         System.out.println("Sending to server file: " + path.getFileName().toString());
         File srcFile = path.toFile();
 
-        try (FileInputStream in = new FileInputStream(srcFile);) {
+        long fileSize = srcFile.length();
+        byte[] fileName = path.getFileName().toString().getBytes(StandardCharsets.UTF_8);
 
-            long fileSize = srcFile.length();
-            byte[] fileName = path.getFileName().toString().getBytes(StandardCharsets.UTF_8);
+        //todo ДОБАВИТЬ ОТПРАВКУ ПУТИ НАЗНАЧЕНИЯ, ИНАЧЕ СОХРАНЯЕТ В КОРЕНЬ ПОЛЬЗОВАТЕЛЯ
 
-            int bufSize = 1 + 4 + fileName.length + 8;
-            ByteBuffer buf = ByteBuffer.allocate(bufSize);
-            //коммандный байт
-            buf.put(ByteCommands.SEND_FILE_COMMAND);
-            //4 байта длина имени
-            buf.putInt(fileName.length);
-            //имя файла
-            buf.put(fileName);
-            //8 байт размер файла
-            buf.putLong(srcFile.length());
-            buf.flip();
-            //отправляем буфер
-            nns.sendData(buf, () -> {
+        int bufSize = 1 + 4 + fileName.length + 8;
+        ByteBuffer buf = ByteBuffer.allocate(bufSize);
+        //коммандный байт
+        buf.put(ByteCommands.SEND_FILE_COMMAND);
+        //4 байта длина имени
+        buf.putInt(fileName.length);
+        //имя файла
+        buf.put(fileName);
+        //8 байт размер файла
+        buf.putLong(srcFile.length());
+        buf.flip();
+        //отправляем буфер
+        nns.sendData(buf, null);
 
-                //шлём сам файл если все прошло успешно
-                System.out.println("Sending file data");
-                ByteBuffer tmpBuf = ByteBuffer.allocate(BUFFER_SIZE);
-                long bytesSent = 0;
+        if (fileSize > 0) {
+            try (FileInputStream in = new FileInputStream(srcFile);) {
 
-                while (bytesSent < fileSize) {
+                    //шлём сам файл если все прошло успешно
+                    System.out.println("Sending file data");
+                    ByteBuffer tmpBuf = ByteBuffer.allocate(BUFFER_SIZE);
+                    long bytesSent = 0;
+
+                    while (bytesSent < fileSize) {
+                        System.out.println("sent: " + bytesSent + " / " + fileSize);
+                        try {
+                            int readByte = in.getChannel().read(tmpBuf);
+                            bytesSent += readByte;
+                            tmpBuf.flip();
+                            nns.sendData(tmpBuf,null);
+                            tmpBuf.clear();
+                            float sentPercent = (float) bytesSent / fileSize;
+
+                            if (progressBar != null) {
+                                Platform.runLater(() -> progressBar.setProgress(sentPercent));
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                     System.out.println("sent: " + bytesSent + " / " + fileSize);
-                    try {
-                        int readByte = in.getChannel().read(tmpBuf);
-                        bytesSent += readByte;
-                        tmpBuf.flip();
-                        nns.sendData(tmpBuf,null);
-                        tmpBuf.clear();
-                        float sentPercent = (float) bytesSent / fileSize;
 
-                        if (progressBar != null) {
-                            Platform.runLater(() -> progressBar.setProgress(sentPercent));
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            byte answerByte = nns.getIn().readByte();
+            if (answerByte == ByteCommands.OK_COMMAND) {
+                callback.callback();
+                if (progressBar != null) {
+                    Platform.runLater(() -> progressBar.setProgress(0));
                 }
-
-                System.out.println("sent: " + bytesSent + " / " + fileSize);
-                try {
-                    byte answerByte = nns.getIn().readByte();
-                    if (answerByte == ByteCommands.OK_COMMAND) {
-                        callback.callback();
-                        if (progressBar != null) {
-                            Platform.runLater(() -> progressBar.setProgress(0));
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-
-        } catch (FileNotFoundException e) {
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

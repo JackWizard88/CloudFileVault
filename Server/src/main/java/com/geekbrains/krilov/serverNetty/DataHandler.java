@@ -2,6 +2,7 @@ package com.geekbrains.krilov.serverNetty;
 
 import com.geekbrains.krilov.ByteCommands;
 import com.geekbrains.krilov.FileInfo;
+import com.geekbrains.krilov.FileUtility;
 import com.google.gson.Gson;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -140,7 +141,7 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
     }
 
     private void getFile(ChannelHandlerContext ctx, ByteBuf buf) {
-        currentState = State.RECEIVING_DATA;
+
         //получение длины имени файла
         int fileNameLength = buf.readInt();
         System.out.println("длина имени файла: " + fileNameLength);
@@ -148,15 +149,25 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
         byte[] fileNameBuf = new byte[fileNameLength];
         buf.readBytes(fileNameBuf);
         fileName = new String(fileNameBuf, StandardCharsets.UTF_8);
-        System.out.println("файл:" + fileName);
         //получение длины файла
         fileLength = buf.readLong();
 
         if (fileLength > 0) {
+            currentState = State.RECEIVING_DATA;
             receivedFileSize = 0;
-        } else receivedFileSize = -1L;
+        } else {
+            try {
+                System.out.println("создание каталога " + homeDir + fileName);
+                FileUtility.createDirectory(homeDir + fileName);
+                ByteBuf tmp = Unpooled.buffer();
+                tmp.writeByte(ByteCommands.OK_COMMAND);
+                ctx.writeAndFlush(tmp);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-        getFileData(ctx, buf);
+//        getFileData(ctx, buf);
 
     }
 

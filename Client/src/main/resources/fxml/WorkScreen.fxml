@@ -28,6 +28,11 @@
                <children>
                   <HBox>
                      <children>
+                        <ComboBox fx:id="diskBox" maxWidth="80.0" minWidth="50.0" prefWidth="80.0" onAction="#selectDiskAction">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </ComboBox>
                         <TextField fx:id="localPathField" editable="false" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets right="5.0" />

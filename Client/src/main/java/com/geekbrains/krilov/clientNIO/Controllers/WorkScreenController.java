@@ -2,6 +2,7 @@ package com.geekbrains.krilov.clientNIO.Controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -57,9 +58,18 @@ public class WorkScreenController extends BaseController {
     private ProgressBar progressBar;
 
     @FXML
+    private ComboBox<String> diskBox;
+
+    @FXML
     void initialize() {
 
         btnServerUp.setOnAction(e -> serverUp(e));
+
+        diskBox.getItems().clear();
+        for (Path p : FileSystems.getDefault().getRootDirectories()) {
+            diskBox.getItems().add(p.toString());
+        }
+        diskBox.getSelectionModel().select(0);
 
         localTable.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 & getSelectedFilename() != null) {
@@ -140,6 +150,11 @@ public class WorkScreenController extends BaseController {
         fileDateColumn1.setPrefWidth(120);
 
         serverTable.getColumns().addAll(fileNameColumn1, fileSizeColumn1, fileDateColumn1);
+    }
+
+    public void selectDiskAction(ActionEvent actionEvent) {
+        ComboBox<String> element = (ComboBox<String>) actionEvent.getSource();
+        updateLocalList(Paths.get(element.getSelectionModel().getSelectedItem()));
     }
 
     public void update() {
