@@ -54,6 +54,9 @@ public class WorkScreenController extends BaseController {
     private Button btnDel;
 
     @FXML
+    private ProgressBar progressBar;
+
+    @FXML
     void initialize() {
 
         btnServerUp.setOnAction(e -> serverUp(e));
@@ -181,14 +184,6 @@ public class WorkScreenController extends BaseController {
         }
     }
 
-    private void sendFile(Path path) {
-        //todo
-    }
-
-    private void getFile(Path path) {
-        //todo
-    }
-
     public void localUp(ActionEvent actionEvent) {
         Path upperPath = Paths.get(localPathField.getText()).getParent();
         if (upperPath != null) {
@@ -241,6 +236,25 @@ public class WorkScreenController extends BaseController {
                 updateLocalList(currentClientPath);
             }
         }
+    }
+
+    public void sendFileToServer() {
+        if (localTable.isFocused()) {
+            Path cpyFilePath = Paths.get(currentClientPath.toString() + "/"+ getSelectedFilename());
+            System.out.println(cpyFilePath.toString());
+            try {
+                ClientController.getInstance().sendFile(cpyFilePath, progressBar, () -> {
+                    updateServerList(currentServerPath);
+                    ScreenController.getInstance().showInfoMessage("Файл сохранен на облаке");
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void getFilefromServer() {
+
     }
 }
 

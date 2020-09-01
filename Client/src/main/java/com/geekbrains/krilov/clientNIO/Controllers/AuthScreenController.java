@@ -15,6 +15,9 @@ import java.util.ResourceBundle;
 public class AuthScreenController extends BaseController implements Initializable {
 
     @FXML
+    private URL location;
+
+    @FXML
     private TextField loginText;
 
     @FXML

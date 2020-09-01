@@ -48,9 +48,9 @@
             </VBox>
             <VBox alignment="CENTER" fillWidth="false" maxHeight="80.0" minWidth="50.0" prefWidth="80.0" spacing="20.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button fx:id="btnCopyToServer" focusTraversable="false" mnemonicParsing="false" text="&gt;&gt;" />
+                  <Button fx:id="btnCopyToServer" focusTraversable="false" mnemonicParsing="false" onAction="#sendFileToServer" text="&gt;&gt;" />
                   <Button fx:id="btnCopyFromServer" focusTraversable="false" mnemonicParsing="false" text="&lt;&lt;" />
-                  <Button fx:id="btnDel" focusTraversable="false" mnemonicParsing="false" text="Del" onAction="#deleteFile" />
+                  <Button fx:id="btnDel" focusTraversable="false" mnemonicParsing="false" onAction="#deleteFile" text="Del" />
                </children>
                <HBox.margin>
                   <Insets top="5.0" />
@@ -93,7 +93,7 @@
    <bottom>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <ProgressBar minHeight="20.0" minWidth="200.0" progress="0.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
+            <ProgressBar fx:id="progressBar" minHeight="20.0" minWidth="200.0" progress="0.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
             <TextField editable="false" minWidth="200.0" prefHeight="25.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="0.0" />
          </children>
          <BorderPane.margin>

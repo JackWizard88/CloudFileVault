@@ -1,20 +1,11 @@
 package com.geekbrains.krilov.clientNIO.Services;
 
-import com.geekbrains.krilov.ByteCommands;
-import com.geekbrains.krilov.FileInfo;
 import com.geekbrains.krilov.clientNIO.Callback;
 import com.geekbrains.krilov.clientNIO.Controllers.ScreenController;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import javafx.application.Platform;
-
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.util.List;
 
 public class NIONetworkService {
 

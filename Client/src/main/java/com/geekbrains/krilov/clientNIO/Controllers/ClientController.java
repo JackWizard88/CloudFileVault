@@ -7,6 +7,10 @@ import com.geekbrains.krilov.clientNIO.Services.NIONetworkService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
+import javafx.scene.control.ProgressBar;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -23,6 +27,7 @@ public class ClientController {
 
     private final String AUTH_COMMAND = "/auth ";
     private final String REG_COMMAND = "/reg ";
+    private static final int BUFFER_SIZE = 1024 * 1024 * 10;
 
     private Status currentState = Status.IDLE;
 
@@ -90,12 +95,15 @@ public class ClientController {
             }
             if (answer == ByteCommands.AUTH_ACCEPTED_COMMAND && currentState == Status.DEMAND_REGISTRATION) {
                 currentState = Status.REGISTERED;
-                try {
-                    ScreenController.getInstance().setWorkScene();
-                    Platform.runLater(() -> ScreenController.getInstance().getCurrentController().update());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+                Platform.runLater(() -> {
+                    try {
+                        ScreenController.getInstance().setWorkScene();
+                        ScreenController.getInstance().getCurrentController().update();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
             } else if (answer == ByteCommands.AUTH_DECLINED_COMMAND) {
                 ScreenController.getInstance().showErrorMessage("Ошибка авторизации. Неверные данные", null);
                 currentState = Status.IDLE;
@@ -168,6 +176,72 @@ public class ClientController {
         buf.put(path.toString().getBytes());
         buf.flip();
         nns.sendData(buf, () -> callback.callback());
+
+    }
+
+    public void sendFile(Path path, ProgressBar progressBar, Callback callback) throws IOException {
+        System.out.println("Sending to server file: " + path.getFileName().toString());
+        File srcFile = path.toFile();
+
+        try (FileInputStream in = new FileInputStream(srcFile);) {
+
+            long fileSize = srcFile.length();
+            byte[] fileName = path.getFileName().toString().getBytes(StandardCharsets.UTF_8);
+
+            int bufSize = 1 + 4 + fileName.length + 8;
+            ByteBuffer buf = ByteBuffer.allocate(bufSize);
+            //коммандный байт
+            buf.put(ByteCommands.SEND_FILE_COMMAND);
+            //4 байта длина имени
+            buf.putInt(fileName.length);
+            //имя файла
+            buf.put(fileName);
+            //8 байт размер файла
+            buf.putLong(srcFile.length());
+            buf.flip();
+            //отправляем буфер
+            nns.sendData(buf, () -> {
+
+                //шлём сам файл если все прошло успешно
+                System.out.println("Sending file data");
+                ByteBuffer tmpBuf = ByteBuffer.allocate(BUFFER_SIZE);
+                long bytesSent = 0;
+
+                while (bytesSent < fileSize) {
+                    System.out.println("sent: " + bytesSent + " / " + fileSize);
+                    try {
+                        int readByte = in.getChannel().read(tmpBuf);
+                        bytesSent += readByte;
+                        tmpBuf.flip();
+                        nns.sendData(tmpBuf,null);
+                        tmpBuf.clear();
+                        float sentPercent = (float) bytesSent / fileSize;
+
+                        if (progressBar != null) {
+                            Platform.runLater(() -> progressBar.setProgress(sentPercent));
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                System.out.println("sent: " + bytesSent + " / " + fileSize);
+                try {
+                    byte answerByte = nns.getIn().readByte();
+                    if (answerByte == ByteCommands.OK_COMMAND) {
+                        callback.callback();
+                        if (progressBar != null) {
+                            Platform.runLater(() -> progressBar.setProgress(0));
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
