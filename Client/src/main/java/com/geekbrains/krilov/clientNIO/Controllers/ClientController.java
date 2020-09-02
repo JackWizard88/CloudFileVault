@@ -8,10 +8,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
 import javafx.scene.control.ProgressBar;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -175,7 +173,15 @@ public class ClientController {
         buf.putInt(path.toString().length());
         buf.put(path.toString().getBytes());
         buf.flip();
-        nns.sendData(buf, () -> callback.callback());
+        nns.sendData(buf, null);
+        try {
+            byte answerByte = nns.getIn().readByte();
+            if (answerByte == ByteCommands.OK_COMMAND) {
+                callback.callback();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -251,4 +257,48 @@ public class ClientController {
 
     }
 
+    public void getFile(Path src, Path dst, ProgressBar progressBar, Callback callback, Callback error) {
+        new Thread(() -> {
+            try {
+                byte[] fileNameBytes = src.toString().getBytes(StandardCharsets.UTF_8);
+                int packBufSize = 1 + 4 + fileNameBytes.length;
+                ByteBuffer buf = ByteBuffer.allocate(packBufSize);
+                buf.put(ByteCommands.GET_FILE_COMMAND);
+                buf.putInt(fileNameBytes.length);
+                buf.put(src.toString().getBytes());
+                buf.flip();
+                nns.sendData(buf, null);
+                buf = ByteBuffer.allocate(BUFFER_SIZE);
+
+                long readBytes = 0;
+                long fileSize = nns.getIn().readLong();
+                System.out.println("fileSize = " + fileSize);
+
+                while (readBytes < fileSize) {
+
+                    boolean append = true;
+                    if (fileSize == 0) append = false;
+                    System.out.println(dst.toString() + "\\" +  src.getFileName().toString());
+                    FileOutputStream out = new FileOutputStream(dst.toString() + "\\" +  src.getFileName().toString(), append);
+                    int read = nns.getChannel().read(buf);
+                    readBytes += read;
+                    buf.flip();
+                    out.getChannel().write(buf);
+                    System.out.println("accepted: " + readBytes + " / " + fileSize);
+                    buf.clear();
+                    float percent = (float) readBytes / fileSize;
+                    Platform.runLater(() -> {
+                        progressBar.setProgress(percent);
+                    });
+                    out.close();
+                }
+                callback.callback();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Platform.runLater(error::callback);
+            }
+        }).start();
+
+    }
 }

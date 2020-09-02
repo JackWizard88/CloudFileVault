@@ -8,10 +8,13 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import javafx.application.Platform;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,6 +30,7 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
     }
 
     private final String SERVER_VAULT_CATALOG = "./vault/";
+    private static final int BUFFER_SIZE = 1024 * 1024 * 10;
     private final String login;
     private final String homeDir;
     private State currentState = State.IDLE;
@@ -48,7 +52,6 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
 
         while (buf.readableBytes() > 0) {
 
-
             if (currentState == State.IDLE) {
 
                 byte commandByte = buf.readByte();
@@ -56,6 +59,7 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
                 switch (commandByte) {
                     case ByteCommands.GET_FILE_COMMAND:
                         System.out.println("STATE: Sending file to " + login);
+                        sendFile(ctx, buf);
                         break;
                     case ByteCommands.SERVER_ROOT_PATH_COMMAND:
                         System.out.println("STATE: Sending root path to " + login);
@@ -104,16 +108,13 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
     }
 
     private void sendFileList(ChannelHandlerContext ctx, ByteBuf buf) throws IOException {
-        //получение директории запроса списка файлов
-        int pathLength = buf.readInt();
-        byte[] fileListBuf = new byte[pathLength];
-        buf.readBytes(fileListBuf);
 
-        String pathName = new String(fileListBuf, StandardCharsets.UTF_8);
+        String pathName = getPathName(buf);
 
         if (pathName.equals(Paths.get(homeDir).getParent().toString())) {
             pathName = homeDir;
         }
+        System.out.println("Sending catalog " + pathName + " to " + login);
 
         //запрос списка файлов по указанному пути и упаковка в json
         String fileList = getFileListJson(pathName);
@@ -128,24 +129,57 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
     }
 
     private void deleteFile(ChannelHandlerContext ctx, ByteBuf buf) {
-        int pathLength = buf.readInt();
-        byte[] filePathBuf = new byte[pathLength];
-        buf.readBytes(filePathBuf);
-        String pathName = new String(filePathBuf, StandardCharsets.UTF_8);
-
         try {
-            Files.walk(Paths.get(pathName))
+            Files.walk(Paths.get(getPathName(buf)))
                     .sorted(Comparator.reverseOrder())
                     .map(Path::toFile)
                     .forEach(File::delete);
-//            Files.delete(Paths.get(pathName));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        sendOK(ctx);
     }
 
     private void sendFile(ChannelHandlerContext ctx, ByteBuf buf) throws Exception {
-        //TODO тут отправка файла по запросу клиента
+            File srcFile = Paths.get(getPathName(buf)).toFile();
+            System.out.println("Sending file " + srcFile + " to " + login);
+
+            try (FileInputStream in = new FileInputStream(srcFile)) {
+                ByteBuf tmp = Unpooled.buffer();
+                long fileSize = srcFile.length();
+                tmp.writeLong(fileSize);
+                ctx.writeAndFlush(tmp);
+
+                long bytesSent = 0;
+                tmp = Unpooled.buffer();
+
+                while (bytesSent < fileSize) {
+                    System.out.println("sent: " + bytesSent + " / " + fileSize);
+                    try {
+                        int readByte = tmp.writeBytes(in.getChannel(), bytesSent, BUFFER_SIZE);
+                        bytesSent += readByte;
+                        ctx.writeAndFlush(tmp);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                System.out.println("sent: " + bytesSent + " / " + fileSize);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+    private String getPathName(ByteBuf buf) {
+        int pathLength = buf.readInt();
+        byte[] filePathBuf = new byte[pathLength];
+        buf.readBytes(filePathBuf);
+        return new String(filePathBuf, StandardCharsets.UTF_8);
+    }
+
+    private void sendOK(ChannelHandlerContext ctx) {
+        ByteBuf tmp = Unpooled.buffer();
+        tmp.writeByte(ByteCommands.OK_COMMAND);
+        ctx.writeAndFlush(tmp);
     }
 
     private void getFile(ChannelHandlerContext ctx, ByteBuf buf) {
@@ -156,12 +190,8 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
         byte[] fileNameBuf = new byte[fileNameLength];
         buf.readBytes(fileNameBuf);
         fileName = new String(fileNameBuf, StandardCharsets.UTF_8);
-        //получение длины пути назначения
-        int pathLength = buf.readInt();
-        //получение пути назначения
-        byte[] pathNameBuf = new byte[pathLength];
-        buf.readBytes(pathNameBuf);
-        pathName = new String(pathNameBuf, StandardCharsets.UTF_8);
+
+        pathName = getPathName(buf);
         System.out.println("путь назначения: " + pathName);
         //получение длины файла
         fileLength = buf.readLong();
@@ -171,11 +201,9 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
             receivedFileSize = 0;
         } else {
             try {
-                System.out.println("создание каталога " + pathName + "/" + fileName);
-                FileUtility.createDirectory(pathName + "/" + fileName);
-                ByteBuf tmp = Unpooled.buffer();
-                tmp.writeByte(ByteCommands.OK_COMMAND);
-                ctx.writeAndFlush(tmp);
+                System.out.println("создание каталога " + pathName + "\\" + fileName);
+                FileUtility.createDirectory(pathName + "\\" + fileName);
+                sendOK(ctx);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -186,7 +214,7 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
         //получение файла
         boolean append = true;
 
-        try (FileOutputStream out = new FileOutputStream(pathName + "/" +  fileName, append)) {
+        try (FileOutputStream out = new FileOutputStream(pathName + "\\" +  fileName, append)) {
             System.out.println("получение файла");
             while (buf.readableBytes() > 0) {
                 System.out.println("получено:" + receivedFileSize + " из " + fileLength);

@@ -9,12 +9,14 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.geekbrains.krilov.FileInfo;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
 public class WorkScreenController extends BaseController {
 
@@ -57,10 +59,16 @@ public class WorkScreenController extends BaseController {
     private Button btnDel;
 
     @FXML
+    VBox controlPanel;
+
+    @FXML
     private ProgressBar progressBar;
 
     @FXML
     private ComboBox<String> diskBox;
+
+    @FXML
+    private TextField statusTextField;
 
     @FXML
     void initialize() {
@@ -236,6 +244,14 @@ public class WorkScreenController extends BaseController {
         return fileName;
     }
 
+    public String getSelectedServerFilename() {
+        return serverTable.getSelectionModel().getSelectedItem().getFilename();
+    }
+
+    public String getSelectedLocalFilename() {
+        return localTable.getSelectionModel().getSelectedItem().getFilename();
+    }
+
     public void exit(ActionEvent actionEvent) {
         System.exit(0);
     }
@@ -245,8 +261,8 @@ public class WorkScreenController extends BaseController {
         if  (serverTable.isFocused()) {
             path = Paths.get(currentServerPath.toString() + "/"+ getSelectedFilename());
             ClientController.getInstance().deleteFile(path, () -> {
-                ScreenController.getInstance().showInfoMessage("Файл удален");
                 updateServerList(currentServerPath);
+                statusTextField.setText("Файл успешно удален");
             });
         } else if (localTable.isFocused()) {
             path = Paths.get(currentClientPath.toString() + "/"+ getSelectedFilename());
@@ -262,14 +278,14 @@ public class WorkScreenController extends BaseController {
 
     public void sendFileToServer() {
         if (localTable.getSelectionModel().getSelectedItem() != null) {
-            Path cpyFilePath = Paths.get(currentClientPath.toString() + "/"+ getSelectedFilename());
+            Path cpyFilePath = Paths.get(currentClientPath.toString() + "/"+ getSelectedLocalFilename());
             Path destFilePath = Paths.get(currentServerPath.toString() + "/");
             System.out.print("из " + cpyFilePath.toString() + "  в ");
             System.out.println(destFilePath.toString());
             try {
                 ClientController.getInstance().sendFile(cpyFilePath, destFilePath, progressBar, () -> {
                     updateServerList(currentServerPath);
-                    ScreenController.getInstance().showInfoMessage("Файл сохранен на облаке");
+                    statusTextField.setText("Файл отправлен в хранилище");
                 });
             } catch (IOException e) {
                 e.printStackTrace();
@@ -278,7 +294,18 @@ public class WorkScreenController extends BaseController {
     }
 
     public void getFilefromServer() {
-
+        if (serverTable.getSelectionModel().getSelectedItem() != null) {
+            controlPanel.setDisable(true);
+            Path cpyFilePath = Paths.get(currentServerPath.toString() + "/"+ getSelectedServerFilename());
+            Path destFilePath = Paths.get(currentClientPath.toString() + "/");
+            System.out.print("из " + cpyFilePath.toString() + "  в ");
+            System.out.println(destFilePath.toString());
+            ClientController.getInstance().getFile(cpyFilePath, destFilePath, progressBar, () -> {
+                updateLocalList(currentClientPath);
+                statusTextField.setText("Файл сохранен");
+            }, () -> ScreenController.getInstance().showErrorMessage("ошибка сохранения файла", null) );
+            controlPanel.setDisable(false);
+        }
     }
 }
 
