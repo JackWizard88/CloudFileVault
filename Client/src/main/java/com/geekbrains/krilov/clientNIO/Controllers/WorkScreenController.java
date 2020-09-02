@@ -1,11 +1,13 @@
 package com.geekbrains.krilov.clientNIO.Controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.geekbrains.krilov.FileInfo;
@@ -267,7 +269,10 @@ public class WorkScreenController extends BaseController {
         } else if (localTable.isFocused()) {
             path = Paths.get(currentClientPath.toString() + "/"+ getSelectedFilename());
             try {
-                Files.delete(path);
+                Files.walk(path)
+                        .sorted(Comparator.reverseOrder())
+                        .map(Path::toFile)
+                        .forEach(File::delete);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -303,6 +308,7 @@ public class WorkScreenController extends BaseController {
             ClientController.getInstance().getFile(cpyFilePath, destFilePath, progressBar, () -> {
                 updateLocalList(currentClientPath);
                 statusTextField.setText("Файл сохранен");
+                progressBar.setProgress(0);
             }, () -> ScreenController.getInstance().showErrorMessage("ошибка сохранения файла", null) );
             controlPanel.setDisable(false);
         }

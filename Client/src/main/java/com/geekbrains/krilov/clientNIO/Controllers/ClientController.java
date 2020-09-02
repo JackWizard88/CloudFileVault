@@ -2,6 +2,7 @@ package com.geekbrains.krilov.clientNIO.Controllers;
 
 import com.geekbrains.krilov.ByteCommands;
 import com.geekbrains.krilov.FileInfo;
+import com.geekbrains.krilov.FileUtility;
 import com.geekbrains.krilov.clientNIO.Callback;
 import com.geekbrains.krilov.clientNIO.Services.NIONetworkService;
 import com.google.gson.Gson;
@@ -274,24 +275,31 @@ public class ClientController {
                 long fileSize = nns.getIn().readLong();
                 System.out.println("fileSize = " + fileSize);
 
-                while (readBytes < fileSize) {
+                if (fileSize > 0) {
+                    while (readBytes < fileSize) {
 
-                    boolean append = true;
-                    if (fileSize == 0) append = false;
+                        boolean append = true;
+                        if (fileSize == 0) append = false;
+                        System.out.println(dst.toString() + "\\" +  src.getFileName().toString());
+                        FileOutputStream out = new FileOutputStream(dst.toString() + "\\" +  src.getFileName().toString(), append);
+                        int read = nns.getChannel().read(buf);
+                        readBytes += read;
+                        buf.flip();
+                        out.getChannel().write(buf);
+                        System.out.println("accepted: " + readBytes + " / " + fileSize);
+                        buf.clear();
+                        float percent = (float) readBytes / fileSize;
+                        Platform.runLater(() -> {
+                            progressBar.setProgress(percent);
+                        });
+                        out.close();
+                    }
+                } else {
                     System.out.println(dst.toString() + "\\" +  src.getFileName().toString());
-                    FileOutputStream out = new FileOutputStream(dst.toString() + "\\" +  src.getFileName().toString(), append);
-                    int read = nns.getChannel().read(buf);
-                    readBytes += read;
-                    buf.flip();
-                    out.getChannel().write(buf);
-                    System.out.println("accepted: " + readBytes + " / " + fileSize);
-                    buf.clear();
-                    float percent = (float) readBytes / fileSize;
-                    Platform.runLater(() -> {
-                        progressBar.setProgress(percent);
-                    });
-                    out.close();
+                    FileUtility.createDirectory(dst.toString() + "\\" +  src.getFileName().toString());
                 }
+
+
                 callback.callback();
 
             } catch (IOException e) {

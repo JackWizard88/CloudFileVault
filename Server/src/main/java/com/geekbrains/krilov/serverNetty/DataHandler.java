@@ -141,14 +141,15 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
     }
 
     private void sendFile(ChannelHandlerContext ctx, ByteBuf buf) throws Exception {
-            File srcFile = Paths.get(getPathName(buf)).toFile();
-            System.out.println("Sending file " + srcFile + " to " + login);
+        File srcFile = Paths.get(getPathName(buf)).toFile();
+        System.out.println("Sending file " + srcFile + " to " + login);
+        ByteBuf tmp = Unpooled.buffer();
+        long fileSize = srcFile.length();
+        tmp.writeLong(fileSize);
+        ctx.writeAndFlush(tmp);
 
+        if (fileSize > 0) {
             try (FileInputStream in = new FileInputStream(srcFile)) {
-                ByteBuf tmp = Unpooled.buffer();
-                long fileSize = srcFile.length();
-                tmp.writeLong(fileSize);
-                ctx.writeAndFlush(tmp);
 
                 long bytesSent = 0;
                 tmp = Unpooled.buffer();
@@ -167,6 +168,8 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
     }
 
     private String getPathName(ByteBuf buf) {
