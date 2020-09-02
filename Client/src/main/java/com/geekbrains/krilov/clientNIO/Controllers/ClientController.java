@@ -179,16 +179,14 @@ public class ClientController {
 
     }
 
-    public void sendFile(Path path, ProgressBar progressBar, Callback callback) throws IOException {
-        System.out.println("Sending to server file: " + path.getFileName().toString());
-        File srcFile = path.toFile();
+    public void sendFile(Path sourcePath, Path destinationPath, ProgressBar progressBar, Callback callback) throws IOException {
+        System.out.println("Sending to server file: " + sourcePath.getFileName().toString());
+        File srcFile = sourcePath.toFile();
 
         long fileSize = srcFile.length();
-        byte[] fileName = path.getFileName().toString().getBytes(StandardCharsets.UTF_8);
+        byte[] fileName = sourcePath.getFileName().toString().getBytes(StandardCharsets.UTF_8);
 
-        //todo ДОБАВИТЬ ОТПРАВКУ ПУТИ НАЗНАЧЕНИЯ, ИНАЧЕ СОХРАНЯЕТ В КОРЕНЬ ПОЛЬЗОВАТЕЛЯ
-
-        int bufSize = 1 + 4 + fileName.length + 8;
+        int bufSize = 1 + 4 + fileName.length + 4 + destinationPath.toString().length() + 8;
         ByteBuffer buf = ByteBuffer.allocate(bufSize);
         //коммандный байт
         buf.put(ByteCommands.SEND_FILE_COMMAND);
@@ -196,6 +194,10 @@ public class ClientController {
         buf.putInt(fileName.length);
         //имя файла
         buf.put(fileName);
+        //длина пути назначения
+        buf.putInt(destinationPath.toString().length());
+        //путь назначения
+        buf.put(destinationPath.toString().getBytes());
         //8 байт размер файла
         buf.putLong(srcFile.length());
         buf.flip();

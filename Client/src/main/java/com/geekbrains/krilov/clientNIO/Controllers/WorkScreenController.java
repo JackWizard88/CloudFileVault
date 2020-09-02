@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.geekbrains.krilov.FileInfo;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -18,6 +19,7 @@ import javafx.scene.control.*;
 public class WorkScreenController extends BaseController {
 
     private Path root = Paths.get(".");
+    private Path homeDir;
     private Path currentClientPath = root;
     private Path currentServerPath;
 
@@ -63,6 +65,14 @@ public class WorkScreenController extends BaseController {
     @FXML
     void initialize() {
 
+        try {
+            homeDir = Paths.get(ClientController.getInstance().getServerRootPath());
+            System.out.println("homeDir: " + homeDir.toString());
+            currentServerPath = homeDir;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         btnServerUp.setOnAction(e -> serverUp(e));
 
         diskBox.getItems().clear();
@@ -84,6 +94,9 @@ public class WorkScreenController extends BaseController {
             if (event.getClickCount() == 2 & getSelectedFilename() != null) {
                 Path path = Paths.get(serverPathField.getText()).resolve(serverTable.getSelectionModel().getSelectedItem().getFilename());
                 if (Files.isDirectory(path)) {
+                    if (path == homeDir.getParent()) {
+                        path = homeDir;
+                    }
                     updateServerList(path);
                 }
             }
@@ -158,16 +171,8 @@ public class WorkScreenController extends BaseController {
     }
 
     public void update() {
-        new Thread(() -> {
-            try {
                 updateLocalList(currentClientPath);
-                currentServerPath = Paths.get(ClientController.getInstance().getServerRootPath());
-                serverPathField.setText(currentServerPath.toString());
                 updateServerList(currentServerPath);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
     }
 
     private void updateServerList(Path path) {
@@ -178,6 +183,8 @@ public class WorkScreenController extends BaseController {
                 ScreenController.getInstance().showErrorMessage("не удалось обновить список файлов", null);
                 return;
             }
+            currentServerPath = path;
+            serverPathField.setText(currentServerPath.toString());
             serverTable.getItems().clear();
             serverTable.getItems().addAll(list);
             serverTable.sort();
@@ -208,10 +215,10 @@ public class WorkScreenController extends BaseController {
 
     public void serverUp(ActionEvent actionEvent) {
         Path upperPath = Paths.get(serverPathField.getText()).getParent();
-        if (upperPath != null) {
+
+        if (!upperPath.toString().equals(homeDir.getParent().toString())) {
             updateServerList(upperPath);
         }
-
     }
 
     public String getSelectedFilename() {
@@ -254,11 +261,13 @@ public class WorkScreenController extends BaseController {
     }
 
     public void sendFileToServer() {
-        if (localTable.isFocused()) {
+        if (localTable.getSelectionModel().getSelectedItem() != null) {
             Path cpyFilePath = Paths.get(currentClientPath.toString() + "/"+ getSelectedFilename());
-            System.out.println(cpyFilePath.toString());
+            Path destFilePath = Paths.get(currentServerPath.toString() + "/");
+            System.out.print("из " + cpyFilePath.toString() + "  в ");
+            System.out.println(destFilePath.toString());
             try {
-                ClientController.getInstance().sendFile(cpyFilePath, progressBar, () -> {
+                ClientController.getInstance().sendFile(cpyFilePath, destFilePath, progressBar, () -> {
                     updateServerList(currentServerPath);
                     ScreenController.getInstance().showInfoMessage("Файл сохранен на облаке");
                 });

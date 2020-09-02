@@ -8,11 +8,15 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +32,7 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
     private State currentState = State.IDLE;
 
     private String fileName;
+    private String pathName;
     private long fileLength;
     private long receivedFileSize;
 
@@ -129,26 +134,35 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
         String pathName = new String(filePathBuf, StandardCharsets.UTF_8);
 
         try {
-            Files.delete(Paths.get(pathName));
+            Files.walk(Paths.get(pathName))
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+//            Files.delete(Paths.get(pathName));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
     private void sendFile(ChannelHandlerContext ctx, ByteBuf buf) throws Exception {
-
+        //TODO тут отправка файла по запросу клиента
     }
 
     private void getFile(ChannelHandlerContext ctx, ByteBuf buf) {
 
         //получение длины имени файла
         int fileNameLength = buf.readInt();
-        System.out.println("длина имени файла: " + fileNameLength);
         //получение имени файла
         byte[] fileNameBuf = new byte[fileNameLength];
         buf.readBytes(fileNameBuf);
         fileName = new String(fileNameBuf, StandardCharsets.UTF_8);
+        //получение длины пути назначения
+        int pathLength = buf.readInt();
+        //получение пути назначения
+        byte[] pathNameBuf = new byte[pathLength];
+        buf.readBytes(pathNameBuf);
+        pathName = new String(pathNameBuf, StandardCharsets.UTF_8);
+        System.out.println("путь назначения: " + pathName);
         //получение длины файла
         fileLength = buf.readLong();
 
@@ -157,8 +171,8 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
             receivedFileSize = 0;
         } else {
             try {
-                System.out.println("создание каталога " + homeDir + fileName);
-                FileUtility.createDirectory(homeDir + fileName);
+                System.out.println("создание каталога " + pathName + "/" + fileName);
+                FileUtility.createDirectory(pathName + "/" + fileName);
                 ByteBuf tmp = Unpooled.buffer();
                 tmp.writeByte(ByteCommands.OK_COMMAND);
                 ctx.writeAndFlush(tmp);
@@ -166,16 +180,13 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
                 e.printStackTrace();
             }
         }
-
-//        getFileData(ctx, buf);
-
     }
 
     private void getFileData(ChannelHandlerContext ctx, ByteBuf buf) {
         //получение файла
         boolean append = true;
 
-        try (FileOutputStream out = new FileOutputStream(homeDir + fileName, append)) {
+        try (FileOutputStream out = new FileOutputStream(pathName + "/" +  fileName, append)) {
             System.out.println("получение файла");
             while (buf.readableBytes() > 0) {
                 System.out.println("получено:" + receivedFileSize + " из " + fileLength);
