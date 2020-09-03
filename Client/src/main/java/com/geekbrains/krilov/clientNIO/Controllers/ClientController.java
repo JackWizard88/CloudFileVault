@@ -13,6 +13,7 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -185,13 +186,18 @@ public class ClientController {
 
     }
 
+    public void sendPath(Path sourcePath, Path destinationPath, ProgressBar progressBar, Callback callback) throws IOException {
+        sendFile(sourcePath, destinationPath, progressBar, null);
+        callback.callback();
+    }
+
     public void sendFile(Path sourcePath, Path destinationPath, ProgressBar progressBar, Callback callback) throws IOException {
         System.out.println("Sending to server file: " + sourcePath.getFileName().toString());
         File srcFile = sourcePath.toFile();
         long fileSize;
 
         if (srcFile.isDirectory()) {
-            fileSize = 0;
+            fileSize = -1L;
         } else fileSize = srcFile.length();
 
         byte[] fileName = sourcePath.getFileName().toString().getBytes(StandardCharsets.UTF_8);
@@ -214,33 +220,41 @@ public class ClientController {
         //отправляем буфер
         nns.sendData(buf, null);
 
-        if (!srcFile.isDirectory()) {
+        if (srcFile.isDirectory()) {
+            File[] files = srcFile.listFiles();
+            if(files!=null) {
+                for(File f: files) {
+                    Path subPath = destinationPath.resolve(sourcePath.getFileName());
+                    System.out.println("subPath: " + subPath.toString());
+                    sendFile(Paths.get(f.toString()), subPath, progressBar, callback);
+                }
+            }
+        } else {
             try (FileInputStream in = new FileInputStream(srcFile);) {
+                //шлём сам файл если все прошло успешно
+                System.out.println("Sending file data");
+                ByteBuffer tmpBuf = ByteBuffer.allocate(BUFFER_SIZE);
+                long bytesSent = 0;
 
-                    //шлём сам файл если все прошло успешно
-                    System.out.println("Sending file data");
-                    ByteBuffer tmpBuf = ByteBuffer.allocate(BUFFER_SIZE);
-                    long bytesSent = 0;
-
-                    while (bytesSent < fileSize) {
-                        System.out.println("sent: " + bytesSent + " / " + fileSize);
-                        try {
-                            int readByte = in.getChannel().read(tmpBuf);
-                            bytesSent += readByte;
-                            tmpBuf.flip();
-                            nns.sendData(tmpBuf,null);
-                            tmpBuf.clear();
-                            float sentPercent = (float) bytesSent / fileSize;
-
-                            if (progressBar != null) {
-                                Platform.runLater(() -> progressBar.setProgress(sentPercent));
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
+                while (bytesSent < fileSize) {
                     System.out.println("sent: " + bytesSent + " / " + fileSize);
+                    try {
+                        int readByte = in.getChannel().read(tmpBuf);
+                        bytesSent += readByte;
+                        tmpBuf.flip();
+                        nns.sendData(tmpBuf,null);
+                        tmpBuf.clear();
+                        float sentPercent = (float) bytesSent / fileSize;
+
+                        if (progressBar != null) {
+                            Platform.runLater(() -> progressBar.setProgress(sentPercent));
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                System.out.println("sent: " + bytesSent + " / " + fileSize);
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -250,15 +264,13 @@ public class ClientController {
         try {
             byte answerByte = nns.getIn().readByte();
             if (answerByte == ByteCommands.OK_COMMAND) {
-                callback.callback();
-                if (progressBar != null) {
-                    Platform.runLater(() -> progressBar.setProgress(0));
+                if (callback != null) {
+                    callback.callback();
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void getFile(Path src, Path dst, ProgressBar progressBar, Callback callback, Callback error) {

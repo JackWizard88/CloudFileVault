@@ -124,12 +124,11 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
     }
 
     private void deleteFile(ChannelHandlerContext ctx, ByteBuf buf) {
-//        try {
-//            FileUtility.deletePath(getPathName(buf));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        FileUtility.deleteFolder(new File(getPathName(buf)));
+        try {
+            FileUtility.deletePath(getPathName(buf));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         sendOK(ctx);
     }
 
@@ -190,9 +189,9 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
         pathName = getPathName(buf);
         //получение длины файла
         fileLength = buf.readLong();
-        System.out.println("путь назначения: " + pathName + " Размер файла: " + fileLength);
+        System.out.println("Имя файла" + fileName + " Путь назначения: " + pathName + " Размер файла: " + fileLength);
 
-        if (fileLength > 0) {
+        if (fileLength > -1L) {
             currentState = State.RECEIVING_DATA;
             receivedFileSize = 0;
         } else {
@@ -211,17 +210,15 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
         boolean append = true;
 
         try (FileOutputStream out = new FileOutputStream(pathName + "\\" +  fileName, append)) {
-            System.out.println("получение файла");
             while (buf.readableBytes() > 0) {
                 System.out.println("получено:" + receivedFileSize + " из " + fileLength);
                 int write = out.getChannel().write(buf.nioBuffer());
                 receivedFileSize += write;
                 buf.readerIndex(buf.readerIndex() + write);
                 if (receivedFileSize == fileLength) {
-                    ByteBuf tmp = Unpooled.buffer();
-                    tmp.writeByte(ByteCommands.OK_COMMAND);
-                    ctx.writeAndFlush(tmp);
                     currentState = State.IDLE;
+                    fileLength = 0;
+                    sendOK(ctx);
                     break;
                 }
             }

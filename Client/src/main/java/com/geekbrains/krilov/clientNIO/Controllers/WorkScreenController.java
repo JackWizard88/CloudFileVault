@@ -286,9 +286,10 @@ public class WorkScreenController extends BaseController {
             System.out.print("из " + cpyFilePath.toString() + "  в ");
             System.out.println(destFilePath.toString());
             try {
-                ClientController.getInstance().sendFile(cpyFilePath, destFilePath, progressBar, () -> {
+                ClientController.getInstance().sendPath(cpyFilePath, destFilePath, progressBar, () -> {
                     updateServerList(currentServerPath);
                     statusTextField.setText("Файл отправлен в хранилище");
+                    progressBar.setProgress(0);
                 });
             } catch (IOException e) {
                 e.printStackTrace();
