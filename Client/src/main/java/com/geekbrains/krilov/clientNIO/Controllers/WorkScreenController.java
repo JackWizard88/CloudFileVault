@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.geekbrains.krilov.FileInfo;
+import com.geekbrains.krilov.FileUtility;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -269,10 +270,7 @@ public class WorkScreenController extends BaseController {
         } else if (localTable.isFocused()) {
             path = Paths.get(currentClientPath.toString() + "/"+ getSelectedFilename());
             try {
-                Files.walk(path)
-                        .sorted(Comparator.reverseOrder())
-                        .map(Path::toFile)
-                        .forEach(File::delete);
+                FileUtility.deletePath(path);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {

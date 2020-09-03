@@ -8,18 +8,13 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import javafx.application.Platform;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -129,14 +124,12 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
     }
 
     private void deleteFile(ChannelHandlerContext ctx, ByteBuf buf) {
-        try {
-            Files.walk(Paths.get(getPathName(buf)))
-                    .sorted(Comparator.reverseOrder())
-                    .map(Path::toFile)
-                    .forEach(File::delete);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            FileUtility.deletePath(getPathName(buf));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        FileUtility.deleteFolder(new File(getPathName(buf)));
         sendOK(ctx);
     }
 
@@ -195,9 +188,9 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
         fileName = new String(fileNameBuf, StandardCharsets.UTF_8);
 
         pathName = getPathName(buf);
-        System.out.println("путь назначения: " + pathName);
         //получение длины файла
         fileLength = buf.readLong();
+        System.out.println("путь назначения: " + pathName + " Размер файла: " + fileLength);
 
         if (fileLength > 0) {
             currentState = State.RECEIVING_DATA;

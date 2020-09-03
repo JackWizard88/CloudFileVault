@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
 import javafx.scene.control.ProgressBar;
-
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -189,8 +188,12 @@ public class ClientController {
     public void sendFile(Path sourcePath, Path destinationPath, ProgressBar progressBar, Callback callback) throws IOException {
         System.out.println("Sending to server file: " + sourcePath.getFileName().toString());
         File srcFile = sourcePath.toFile();
+        long fileSize;
 
-        long fileSize = srcFile.length();
+        if (srcFile.isDirectory()) {
+            fileSize = 0;
+        } else fileSize = srcFile.length();
+
         byte[] fileName = sourcePath.getFileName().toString().getBytes(StandardCharsets.UTF_8);
 
         int bufSize = 1 + 4 + fileName.length + 4 + destinationPath.toString().length() + 8;
@@ -206,12 +209,12 @@ public class ClientController {
         //путь назначения
         buf.put(destinationPath.toString().getBytes());
         //8 байт размер файла
-        buf.putLong(srcFile.length());
+        buf.putLong(fileSize);
         buf.flip();
         //отправляем буфер
         nns.sendData(buf, null);
 
-        if (fileSize > 0) {
+        if (!srcFile.isDirectory()) {
             try (FileInputStream in = new FileInputStream(srcFile);) {
 
                     //шлём сам файл если все прошло успешно
@@ -298,7 +301,6 @@ public class ClientController {
                     System.out.println(dst.toString() + "\\" +  src.getFileName().toString());
                     FileUtility.createDirectory(dst.toString() + "\\" +  src.getFileName().toString());
                 }
-
 
                 callback.callback();
 

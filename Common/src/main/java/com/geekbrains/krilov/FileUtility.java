@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 
 public class FileUtility {
 
@@ -24,6 +25,36 @@ public class FileUtility {
         if (!Files.exists(path)) {
             Files.createDirectories(path);
         }
+    }
+
+    public static void deletePath(String pathName) throws IOException {
+
+        Files.walk(Paths.get(pathName))
+                .sorted(Comparator.reverseOrder())
+                .map(Path::toFile)
+                .forEach(File::delete);
+    }
+
+    public static void deletePath(Path path) throws IOException {
+
+        Files.walk(path)
+                .sorted(Comparator.reverseOrder())
+                .map(Path::toFile)
+                .forEach(File::delete);
+    }
+
+    public static void deleteFolder(File folder) {
+        File[] files = folder.listFiles();
+        if(files!=null) {
+            for(File f: files) {
+                if(f.isDirectory()) {
+                    deleteFolder(f);
+                } else {
+                    f.delete();
+                }
+            }
+        }
+        folder.delete();
     }
 
 }
