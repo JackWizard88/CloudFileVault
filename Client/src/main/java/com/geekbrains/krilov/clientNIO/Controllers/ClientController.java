@@ -192,7 +192,6 @@ public class ClientController {
     }
 
     public void sendFile(Path sourcePath, Path destinationPath, ProgressBar progressBar, Callback callback) throws IOException {
-        System.out.println("Sending to server file: " + sourcePath.getFileName().toString());
         File srcFile = sourcePath.toFile();
         long fileSize;
 
@@ -200,6 +199,7 @@ public class ClientController {
             fileSize = -1L;
         } else fileSize = srcFile.length();
 
+        System.out.println("Sending to server file: " + sourcePath.getFileName().toString() + " Sise: " + fileSize + " From: " + sourcePath + " To: " + destinationPath);
         byte[] fileName = sourcePath.getFileName().toString().getBytes(StandardCharsets.UTF_8);
 
         int bufSize = 1 + 4 + fileName.length + 4 + destinationPath.toString().length() + 8;

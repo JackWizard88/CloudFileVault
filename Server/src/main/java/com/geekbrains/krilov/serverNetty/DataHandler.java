@@ -189,7 +189,7 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
         pathName = getPathName(buf);
         //получение длины файла
         fileLength = buf.readLong();
-        System.out.println("Имя файла" + fileName + " Путь назначения: " + pathName + " Размер файла: " + fileLength);
+        System.out.println("Имя файла: " + fileName + " Путь назначения: " + pathName + " Размер файла: " + fileLength);
 
         if (fileLength > -1L) {
             currentState = State.RECEIVING_DATA;
