@@ -280,7 +280,9 @@ public class WorkScreenController extends BaseController {
     }
 
     public void sendFileToServer() {
+
         if (localTable.getSelectionModel().getSelectedItem() != null) {
+            controlPanel.setDisable(true);
             Path cpyFilePath = Paths.get(currentClientPath.toString() + "/"+ getSelectedLocalFilename());
             Path destFilePath = Paths.get(currentServerPath.toString() + "/");
             System.out.print("из " + cpyFilePath.toString() + "  в ");
@@ -291,8 +293,10 @@ public class WorkScreenController extends BaseController {
                     statusTextField.setText("Файл отправлен в хранилище");
                     progressBar.setProgress(0);
                 });
+                controlPanel.setDisable(false);
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
             }
         }
     }
@@ -302,8 +306,6 @@ public class WorkScreenController extends BaseController {
             controlPanel.setDisable(true);
             Path cpyFilePath = Paths.get(currentServerPath.toString() + "/"+ getSelectedServerFilename());
             Path destFilePath = Paths.get(currentClientPath.toString() + "/");
-            System.out.print("из " + cpyFilePath.toString() + "  в ");
-            System.out.println(destFilePath.toString());
             ClientController.getInstance().getFile(cpyFilePath, destFilePath, progressBar, () -> {
                 updateLocalList(currentClientPath);
                 statusTextField.setText("Файл сохранен");

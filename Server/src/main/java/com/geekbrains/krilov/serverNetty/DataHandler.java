@@ -209,6 +209,12 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
         //получение файла
         boolean append = true;
 
+        try {
+            FileUtility.createDirectory(pathName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         try (FileOutputStream out = new FileOutputStream(pathName + "\\" +  fileName, append)) {
             while (buf.readableBytes() > 0) {
                 System.out.println("получено:" + receivedFileSize + " из " + fileLength);

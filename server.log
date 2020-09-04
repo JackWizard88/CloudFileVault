@@ -181,3 +181,51 @@ Created at:
 2020-09-03 20:11:08.982 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
 2020-09-04 09:17:46.503 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
 2020-09-04 09:17:46.507 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:18:16.049 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 11:18:16.053 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:20:36.055 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 11:20:36.059 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:21:12.499 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:25:55.242 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 11:25:55.244 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:26:27.462 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:29:16.002 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 11:29:16.006 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:29:27.652 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:29:52.497 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 11:29:52.501 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:31:09.993 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:32:31.964 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:33:36.996 [nioEventLoopGroup-3-3] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:35:11.328 [nioEventLoopGroup-3-4] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:35:17.852 [nioEventLoopGroup-3-5] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - null Logged out
+2020-09-04 11:35:25.524 [nioEventLoopGroup-3-6] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:35:35.678 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 11:35:35.681 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:36:26.594 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:37:04.856 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 11:37:04.860 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:37:34.302 [nioEventLoopGroup-3-1] ERROR io.netty.util.ResourceLeakDetector - LEAK: ByteBuf.release() was not called before it's garbage-collected. See https://netty.io/wiki/reference-counted-objects.html for more information.
+Recent access records: 
+Created at:
+	io.netty.buffer.PooledByteBufAllocator.newDirectBuffer(PooledByteBufAllocator.java:349)
+	io.netty.buffer.AbstractByteBufAllocator.directBuffer(AbstractByteBufAllocator.java:187)
+	io.netty.buffer.AbstractByteBufAllocator.directBuffer(AbstractByteBufAllocator.java:178)
+	io.netty.buffer.AbstractByteBufAllocator.ioBuffer(AbstractByteBufAllocator.java:139)
+	io.netty.channel.DefaultMaxMessagesRecvByteBufAllocator$MaxMessageHandle.allocate(DefaultMaxMessagesRecvByteBufAllocator.java:114)
+	io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:147)
+	io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:700)
+	io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:635)
+	io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:552)
+	io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:514)
+	io.netty.util.concurrent.SingleThreadEventExecutor$6.run(SingleThreadEventExecutor.java:1044)
+	io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	java.lang.Thread.run(Thread.java:748)
+2020-09-04 11:38:16.941 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:38:52.671 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:39:20.460 [nioEventLoopGroup-3-3] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:40:56.864 [nioEventLoopGroup-3-4] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:43:44.737 [nioEventLoopGroup-3-5] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:45:45.680 [nioEventLoopGroup-3-6] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:46:48.853 [nioEventLoopGroup-3-7] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out

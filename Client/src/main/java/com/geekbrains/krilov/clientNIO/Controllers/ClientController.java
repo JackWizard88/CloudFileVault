@@ -192,33 +192,9 @@ public class ClientController {
     }
 
     public void sendFile(Path sourcePath, Path destinationPath, ProgressBar progressBar, Callback callback) throws IOException {
+
         File srcFile = sourcePath.toFile();
         long fileSize;
-
-        if (srcFile.isDirectory()) {
-            fileSize = -1L;
-        } else fileSize = srcFile.length();
-
-        System.out.println("Sending to server file: " + sourcePath.getFileName().toString() + " Sise: " + fileSize + " From: " + sourcePath + " To: " + destinationPath);
-        byte[] fileName = sourcePath.getFileName().toString().getBytes(StandardCharsets.UTF_8);
-
-        int bufSize = 1 + 4 + fileName.length + 4 + destinationPath.toString().length() + 8;
-        ByteBuffer buf = ByteBuffer.allocate(bufSize);
-        //коммандный байт
-        buf.put(ByteCommands.SEND_FILE_COMMAND);
-        //4 байта длина имени
-        buf.putInt(fileName.length);
-        //имя файла
-        buf.put(fileName);
-        //длина пути назначения
-        buf.putInt(destinationPath.toString().length());
-        //путь назначения
-        buf.put(destinationPath.toString().getBytes());
-        //8 байт размер файла
-        buf.putLong(fileSize);
-        buf.flip();
-        //отправляем буфер
-        nns.sendData(buf, null);
 
         if (srcFile.isDirectory()) {
             File[] files = srcFile.listFiles();
@@ -226,12 +202,21 @@ public class ClientController {
                 for(File f: files) {
                     Path subPath = destinationPath.resolve(sourcePath.getFileName());
                     System.out.println("subPath: " + subPath.toString());
-                    sendFile(Paths.get(f.toString()), subPath, progressBar, callback);
+                    try {
+                        sendFile(Paths.get(f.toString()), subPath, progressBar, callback);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+            fileSize = -1L;
+            sendInfoData(sourcePath, destinationPath, fileSize);
+
         } else {
             try (FileInputStream in = new FileInputStream(srcFile);) {
-                //шлём сам файл если все прошло успешно
+                fileSize = srcFile.length();
+                sendInfoData(sourcePath, destinationPath, fileSize);
+
                 System.out.println("Sending file data");
                 ByteBuffer tmpBuf = ByteBuffer.allocate(BUFFER_SIZE);
                 long bytesSent = 0;
@@ -258,6 +243,8 @@ public class ClientController {
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 
@@ -271,6 +258,23 @@ public class ClientController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendInfoData(Path sourcePath, Path destinationPath, long fileSize) {
+        new Thread(() -> {
+            System.out.println("Sending to server: " + sourcePath.getFileName().toString() + " Sise: " + fileSize + " From: " + sourcePath + " To: " + destinationPath);
+            byte[] fileName = sourcePath.getFileName().toString().getBytes(StandardCharsets.UTF_8);
+            int bufSize = 1 + 4 + fileName.length + 4 + destinationPath.toString().length() + 8;
+            ByteBuffer buf = ByteBuffer.allocate(bufSize);
+            buf.put(ByteCommands.SEND_FILE_COMMAND);
+            buf.putInt(fileName.length);
+            buf.put(fileName);
+            buf.putInt(destinationPath.toString().length());
+            buf.put(destinationPath.toString().getBytes());
+            buf.putLong(fileSize);
+            buf.flip();
+            nns.sendData(buf, null);
+        }).start();
     }
 
     public void getFile(Path src, Path dst, ProgressBar progressBar, Callback callback, Callback error) {
