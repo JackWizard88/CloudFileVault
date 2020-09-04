@@ -133,35 +133,35 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
     }
 
     private void sendFile(ChannelHandlerContext ctx, ByteBuf buf) throws Exception {
-        File srcFile = Paths.get(getPathName(buf)).toFile();
-        System.out.println("Sending file " + srcFile + " to " + login);
-        ByteBuf tmp = Unpooled.buffer();
-        long fileSize = srcFile.length();
-        tmp.writeLong(fileSize);
-        ctx.writeAndFlush(tmp);
 
-        if (fileSize > 0) {
-            try (FileInputStream in = new FileInputStream(srcFile)) {
+            File srcFile = Paths.get(getPathName(buf)).toFile();
+            System.out.println("Sending file " + srcFile + " to " + login);
+            ByteBuf tmp = Unpooled.buffer();
+            long fileSize = srcFile.length();
+            tmp.writeLong(fileSize);
+            ctx.writeAndFlush(tmp);
 
-                long bytesSent = 0;
-                tmp = Unpooled.buffer();
+            if (fileSize > 0) {
+                try (FileInputStream in = new FileInputStream(srcFile)) {
 
-                while (bytesSent < fileSize) {
-                    System.out.println("sent: " + bytesSent + " / " + fileSize);
-                    try {
-                        int readByte = tmp.writeBytes(in.getChannel(), bytesSent, BUFFER_SIZE);
-                        bytesSent += readByte;
-                        ctx.writeAndFlush(tmp);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    long bytesSent = 0;
+                    tmp = Unpooled.buffer();
+
+                    while (bytesSent < fileSize) {
+                        System.out.println("sent: " + bytesSent + " / " + fileSize);
+                        try {
+                            int readByte = tmp.writeBytes(in.getChannel(), bytesSent, BUFFER_SIZE);
+                            bytesSent += readByte;
+                            ctx.writeAndFlush(tmp);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
+                    System.out.println("sent: " + bytesSent + " / " + fileSize);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                System.out.println("sent: " + bytesSent + " / " + fileSize);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }
-
     }
 
     private String getPathName(ByteBuf buf) {
@@ -179,58 +179,60 @@ public class DataHandler extends ChannelInboundHandlerAdapter {
 
     private void getFile(ChannelHandlerContext ctx, ByteBuf buf) {
 
-        //получение длины имени файла
-        int fileNameLength = buf.readInt();
-        //получение имени файла
-        byte[] fileNameBuf = new byte[fileNameLength];
-        buf.readBytes(fileNameBuf);
-        fileName = new String(fileNameBuf, StandardCharsets.UTF_8);
+            //получение длины имени файла
+            int fileNameLength = buf.readInt();
+            //получение имени файла
+            byte[] fileNameBuf = new byte[fileNameLength];
+            buf.readBytes(fileNameBuf);
+            fileName = new String(fileNameBuf, StandardCharsets.UTF_8);
 
-        pathName = getPathName(buf);
-        //получение длины файла
-        fileLength = buf.readLong();
-        System.out.println("Имя файла: " + fileName + " Путь назначения: " + pathName + " Размер файла: " + fileLength);
+            pathName = getPathName(buf);
+            //получение длины файла
+            fileLength = buf.readLong();
+            System.out.println("Имя файла: " + fileName + " Путь назначения: " + pathName + " Размер файла: " + fileLength);
 
-        if (fileLength > -1L) {
-            currentState = State.RECEIVING_DATA;
-            receivedFileSize = 0;
-        } else {
-            try {
-                System.out.println("создание каталога " + pathName + "\\" + fileName);
-                FileUtility.createDirectory(pathName + "\\" + fileName);
-                sendOK(ctx);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (fileLength > -1L) {
+                currentState = State.RECEIVING_DATA;
+                receivedFileSize = 0;
+            } else {
+                try {
+                    System.out.println("создание каталога " + pathName + "\\" + fileName);
+                    FileUtility.createDirectory(pathName + "\\" + fileName);
+                    sendOK(ctx);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
     }
 
     private void getFileData(ChannelHandlerContext ctx, ByteBuf buf) {
-        //получение файла
-        boolean append = true;
 
-        try {
-            FileUtility.createDirectory(pathName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            //получение файла
+            boolean append = true;
 
-        try (FileOutputStream out = new FileOutputStream(pathName + "\\" +  fileName, append)) {
-            while (buf.readableBytes() > 0) {
-                System.out.println("получено:" + receivedFileSize + " из " + fileLength);
-                int write = out.getChannel().write(buf.nioBuffer());
-                receivedFileSize += write;
-                buf.readerIndex(buf.readerIndex() + write);
-                if (receivedFileSize == fileLength) {
-                    currentState = State.IDLE;
-                    fileLength = 0;
-                    sendOK(ctx);
-                    break;
-                }
+            try {
+                FileUtility.createDirectory(pathName);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+            try (FileOutputStream out = new FileOutputStream(pathName + "\\" +  fileName, append)) {
+                while (buf.readableBytes() > 0) {
+                    System.out.println("получено:" + receivedFileSize + " из " + fileLength);
+                    int write = out.getChannel().write(buf.nioBuffer());
+                    receivedFileSize += write;
+                    buf.readerIndex(buf.readerIndex() + write);
+                    if (receivedFileSize == fileLength) {
+                        currentState = State.IDLE;
+                        fileLength = 0;
+                        sendOK(ctx);
+                        break;
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
     }
 
     private String getFileListJson(String pathName) throws IOException {

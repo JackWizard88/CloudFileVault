@@ -261,35 +261,35 @@ public class ClientController {
     }
 
     public void sendInfoData(Path sourcePath, Path destinationPath, long fileSize) {
-        new Thread(() -> {
-            System.out.println("Sending to server: " + sourcePath.getFileName().toString() + " Sise: " + fileSize + " From: " + sourcePath + " To: " + destinationPath);
-            byte[] fileName = sourcePath.getFileName().toString().getBytes(StandardCharsets.UTF_8);
-            int bufSize = 1 + 4 + fileName.length + 4 + destinationPath.toString().length() + 8;
-            ByteBuffer buf = ByteBuffer.allocate(bufSize);
-            buf.put(ByteCommands.SEND_FILE_COMMAND);
-            buf.putInt(fileName.length);
-            buf.put(fileName);
-            buf.putInt(destinationPath.toString().length());
-            buf.put(destinationPath.toString().getBytes());
-            buf.putLong(fileSize);
-            buf.flip();
-            nns.sendData(buf, null);
-        }).start();
+
+        System.out.println("Sending to server: " + sourcePath.getFileName().toString() + " Sise: " + fileSize + " From: " + sourcePath + " To: " + destinationPath);
+        byte[] fileName = sourcePath.getFileName().toString().getBytes(StandardCharsets.UTF_8);
+        int bufSize = 1 + 4 + fileName.length + 4 + destinationPath.toString().length() + 8;
+        ByteBuffer buf = ByteBuffer.allocate(bufSize);
+        buf.put(ByteCommands.SEND_FILE_COMMAND);
+        buf.putInt(fileName.length);
+        buf.put(fileName);
+        buf.putInt(destinationPath.toString().length());
+        buf.put(destinationPath.toString().getBytes());
+        buf.putLong(fileSize);
+        buf.flip();
+        nns.sendData(buf, null);
+
     }
 
     public void getFile(Path src, Path dst, ProgressBar progressBar, Callback callback, Callback error) {
-        new Thread(() -> {
-            try {
-                byte[] fileNameBytes = src.toString().getBytes(StandardCharsets.UTF_8);
-                int packBufSize = 1 + 4 + fileNameBytes.length;
-                ByteBuffer buf = ByteBuffer.allocate(packBufSize);
-                buf.put(ByteCommands.GET_FILE_COMMAND);
-                buf.putInt(fileNameBytes.length);
-                buf.put(src.toString().getBytes());
-                buf.flip();
-                nns.sendData(buf, null);
-                buf = ByteBuffer.allocate(BUFFER_SIZE);
 
+            byte[] fileNameBytes = src.toString().getBytes(StandardCharsets.UTF_8);
+            int packBufSize = 1 + 4 + fileNameBytes.length;
+            ByteBuffer buf = ByteBuffer.allocate(packBufSize);
+            buf.put(ByteCommands.GET_FILE_COMMAND);
+            buf.putInt(fileNameBytes.length);
+            buf.put(src.toString().getBytes());
+            buf.flip();
+            nns.sendData(buf, null);
+
+            try {
+                buf = ByteBuffer.allocate(BUFFER_SIZE);
                 long readBytes = 0;
                 long fileSize = nns.getIn().readLong();
                 System.out.println("fileSize = " + fileSize);
@@ -298,8 +298,6 @@ public class ClientController {
                     while (readBytes < fileSize) {
 
                         boolean append = true;
-                        if (fileSize == 0) append = false;
-                        System.out.println(dst.toString() + "\\" +  src.getFileName().toString());
                         FileOutputStream out = new FileOutputStream(dst.toString() + "\\" +  src.getFileName().toString(), append);
                         int read = nns.getChannel().read(buf);
                         readBytes += read;
@@ -324,7 +322,5 @@ public class ClientController {
                 e.printStackTrace();
                 Platform.runLater(error::callback);
             }
-        }).start();
-
     }
 }

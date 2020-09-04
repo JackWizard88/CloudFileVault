@@ -287,17 +287,19 @@ public class WorkScreenController extends BaseController {
             Path destFilePath = Paths.get(currentServerPath.toString() + "/");
             System.out.print("из " + cpyFilePath.toString() + "  в ");
             System.out.println(destFilePath.toString());
-            try {
-                ClientController.getInstance().sendPath(cpyFilePath, destFilePath, progressBar, () -> {
-                    updateServerList(currentServerPath);
-                    statusTextField.setText("Файл отправлен в хранилище");
-                    progressBar.setProgress(0);
-                });
-                controlPanel.setDisable(false);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-            }
+            new Thread(() -> {
+                try {
+                    ClientController.getInstance().sendPath(cpyFilePath, destFilePath, progressBar, () -> {
+                        updateServerList(currentServerPath);
+                        statusTextField.setText("Файл отправлен в хранилище");
+                        progressBar.setProgress(0);
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    controlPanel.setDisable(false);
+                }
+            }).start();
         }
     }
 
@@ -306,12 +308,15 @@ public class WorkScreenController extends BaseController {
             controlPanel.setDisable(true);
             Path cpyFilePath = Paths.get(currentServerPath.toString() + "/"+ getSelectedServerFilename());
             Path destFilePath = Paths.get(currentClientPath.toString() + "/");
-            ClientController.getInstance().getFile(cpyFilePath, destFilePath, progressBar, () -> {
-                updateLocalList(currentClientPath);
-                statusTextField.setText("Файл сохранен");
-                progressBar.setProgress(0);
-            }, () -> ScreenController.getInstance().showErrorMessage("ошибка сохранения файла", null) );
-            controlPanel.setDisable(false);
+            new Thread(() -> {
+                ClientController.getInstance().getFile(cpyFilePath, destFilePath, progressBar, () -> {
+                    updateLocalList(currentClientPath);
+                    statusTextField.setText("Файл сохранен");
+                    progressBar.setProgress(0);
+                }, () -> ScreenController.getInstance().showErrorMessage("ошибка сохранения файла", null) );
+                controlPanel.setDisable(false);
+            }).start();
+
         }
     }
 }
