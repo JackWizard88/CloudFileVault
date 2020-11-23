@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="250.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.krilov.clientNIO.Controllers.AuthScreenController">
+    <children>
+        <TextField fx:id="loginText" layoutX="109.0" layoutY="24.0" prefHeight="25.0" prefWidth="150.0" />
+        <PasswordField fx:id="passwordText" layoutX="109.0" layoutY="62.0" prefHeight="25.0" prefWidth="150.0" />
+        <Button fx:id="buttonOk" layoutX="90.0" layoutY="109.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #99cc22;" text="Войти">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+        <Button fx:id="buttonCancel" layoutX="90.0" layoutY="199.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Выход" />
+        <Label layoutX="60.0" layoutY="28.0" text="Логин:">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+        <Label layoutX="51.0" layoutY="65.0" text="Пароль:">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+        <Button fx:id="buttonRegister" layoutX="90.0" layoutY="154.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Регистрация" />
+    </children>
+</AnchorPane>

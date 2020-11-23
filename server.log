@@ -1,0 +1,231 @@
+2020-09-02 10:14:55.745 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 10:14:55.749 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 10:27:10.489 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 10:27:10.492 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 10:27:58.828 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 10:31:28.896 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 10:31:28.900 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 10:32:03.141 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 10:33:09.821 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 10:33:09.825 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 10:33:18.597 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 10:33:18.601 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 10:35:19.700 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 11:05:19.846 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 11:05:19.850 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 11:06:03.767 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 11:11:12.283 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 11:11:12.287 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 11:12:06.304 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 11:12:06.308 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 11:13:19.997 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 11:13:20.001 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 11:14:01.254 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 11:16:39.623 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 11:16:39.627 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 11:18:23.581 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 11:20:21.935 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 11:22:44.812 [nioEventLoopGroup-3-3] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 11:27:40.288 [nioEventLoopGroup-3-4] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 11:28:17.191 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 11:28:17.195 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 11:34:09.303 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 11:34:09.308 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 11:44:43.595 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 11:44:43.599 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 11:45:37.753 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 11:49:46.343 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 11:50:14.143 [nioEventLoopGroup-3-3] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 11:55:00.285 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 11:55:00.289 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 11:55:56.094 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 11:58:04.807 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 11:59:26.840 [nioEventLoopGroup-3-3] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 12:03:44.212 [nioEventLoopGroup-3-4] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 12:04:29.774 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 12:04:29.778 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 12:06:15.078 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 12:09:54.463 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 12:09:54.467 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 12:11:45.349 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 12:13:17.252 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 12:17:08.790 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 12:17:08.794 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 12:19:55.464 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 12:19:55.468 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 12:21:13.901 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 12:21:13.905 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 12:22:17.099 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 12:22:17.102 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 12:24:58.883 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 12:25:32.855 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 12:26:07.015 [nioEventLoopGroup-3-3] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 12:27:09.202 [nioEventLoopGroup-3-4] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 12:28:10.275 [nioEventLoopGroup-3-5] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-02 20:49:53.082 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-02 20:49:53.088 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-02 20:52:28.119 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 13:02:53.087 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 13:02:53.092 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 13:03:45.236 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 13:03:45.240 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 13:12:00.350 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 13:12:00.353 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 13:12:24.621 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 13:14:03.141 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 13:14:03.144 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 13:14:24.423 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 13:27:40.925 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 13:27:40.928 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 13:28:09.087 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 13:28:32.391 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 13:28:32.394 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 13:29:54.857 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 13:30:01.998 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 13:30:02.002 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 13:30:48.904 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 13:34:16.638 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 13:36:59.496 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 13:36:59.500 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 13:38:45.200 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 13:38:45.203 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 13:40:11.625 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 13:40:11.629 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 13:41:52.706 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 13:42:00.802 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 16:57:05.136 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 16:57:05.140 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 16:58:11.545 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 16:59:50.790 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 16:59:54.858 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 16:59:54.861 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 17:02:09.452 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 17:02:09.456 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 17:02:55.479 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 17:04:00.062 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 17:05:18.386 [nioEventLoopGroup-3-3] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 17:05:37.325 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 17:05:37.329 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 17:11:44.972 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 17:11:44.976 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 17:14:02.628 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 17:18:56.675 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 17:18:56.680 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 17:23:27.402 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 17:23:36.748 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 17:23:41.424 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 17:23:41.428 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 17:36:53.202 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 17:36:53.206 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 17:38:05.092 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 17:38:05.096 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 17:39:42.284 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 17:40:22.637 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 17:40:22.641 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 17:40:57.557 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 17:42:02.998 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 17:42:03.002 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 17:42:45.811 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 17:43:42.082 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 17:43:42.086 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 17:50:44.386 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 17:50:44.389 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 17:53:19.292 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 17:53:35.886 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 17:53:35.889 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 17:54:02.091 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 17:54:13.716 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 17:58:09.669 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 17:58:09.673 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 17:58:22.710 [nioEventLoopGroup-3-1] ERROR io.netty.util.ResourceLeakDetector - LEAK: ByteBuf.release() was not called before it's garbage-collected. See https://netty.io/wiki/reference-counted-objects.html for more information.
+Recent access records: 
+Created at:
+	io.netty.buffer.PooledByteBufAllocator.newDirectBuffer(PooledByteBufAllocator.java:349)
+	io.netty.buffer.AbstractByteBufAllocator.directBuffer(AbstractByteBufAllocator.java:187)
+	io.netty.buffer.AbstractByteBufAllocator.directBuffer(AbstractByteBufAllocator.java:178)
+	io.netty.buffer.AbstractByteBufAllocator.ioBuffer(AbstractByteBufAllocator.java:139)
+	io.netty.channel.DefaultMaxMessagesRecvByteBufAllocator$MaxMessageHandle.allocate(DefaultMaxMessagesRecvByteBufAllocator.java:114)
+	io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:147)
+	io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:700)
+	io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:635)
+	io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:552)
+	io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:514)
+	io.netty.util.concurrent.SingleThreadEventExecutor$6.run(SingleThreadEventExecutor.java:1044)
+	io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	java.lang.Thread.run(Thread.java:748)
+2020-09-03 18:00:34.836 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 18:00:34.839 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 18:00:48.030 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 18:01:39.892 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 18:01:39.896 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 18:01:55.362 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 18:02:15.886 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 18:02:15.890 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 18:03:37.132 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 18:05:15.746 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 18:05:15.750 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 18:06:43.379 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 18:27:42.358 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 18:27:42.362 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 18:29:46.290 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 18:29:46.294 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 18:30:03.363 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 18:30:18.415 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 18:30:23.475 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 18:30:23.479 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 20:08:13.460 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 20:08:13.464 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-03 20:11:02.855 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-03 20:11:08.978 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-03 20:11:08.982 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 09:17:46.503 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 09:17:46.507 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:18:16.049 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 11:18:16.053 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:20:36.055 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 11:20:36.059 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:21:12.499 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:25:55.242 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 11:25:55.244 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:26:27.462 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:29:16.002 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 11:29:16.006 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:29:27.652 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:29:52.497 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 11:29:52.501 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:31:09.993 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:32:31.964 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:33:36.996 [nioEventLoopGroup-3-3] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:35:11.328 [nioEventLoopGroup-3-4] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:35:17.852 [nioEventLoopGroup-3-5] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - null Logged out
+2020-09-04 11:35:25.524 [nioEventLoopGroup-3-6] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:35:35.678 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 11:35:35.681 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:36:26.594 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:37:04.856 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - UserData successfully connected
+2020-09-04 11:37:04.860 [main] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - Auth service started
+2020-09-04 11:37:34.302 [nioEventLoopGroup-3-1] ERROR io.netty.util.ResourceLeakDetector - LEAK: ByteBuf.release() was not called before it's garbage-collected. See https://netty.io/wiki/reference-counted-objects.html for more information.
+Recent access records: 
+Created at:
+	io.netty.buffer.PooledByteBufAllocator.newDirectBuffer(PooledByteBufAllocator.java:349)
+	io.netty.buffer.AbstractByteBufAllocator.directBuffer(AbstractByteBufAllocator.java:187)
+	io.netty.buffer.AbstractByteBufAllocator.directBuffer(AbstractByteBufAllocator.java:178)
+	io.netty.buffer.AbstractByteBufAllocator.ioBuffer(AbstractByteBufAllocator.java:139)
+	io.netty.channel.DefaultMaxMessagesRecvByteBufAllocator$MaxMessageHandle.allocate(DefaultMaxMessagesRecvByteBufAllocator.java:114)
+	io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:147)
+	io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:700)
+	io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:635)
+	io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:552)
+	io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:514)
+	io.netty.util.concurrent.SingleThreadEventExecutor$6.run(SingleThreadEventExecutor.java:1044)
+	io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	java.lang.Thread.run(Thread.java:748)
+2020-09-04 11:38:16.941 [nioEventLoopGroup-3-1] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:38:52.671 [nioEventLoopGroup-3-2] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:39:20.460 [nioEventLoopGroup-3-3] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:40:56.864 [nioEventLoopGroup-3-4] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:43:44.737 [nioEventLoopGroup-3-5] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:45:45.680 [nioEventLoopGroup-3-6] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out
+2020-09-04 11:46:48.853 [nioEventLoopGroup-3-7] INFO  com.geekbrains.krilov.serverNetty.AuthService.BaseAuthService - 123 Logged out

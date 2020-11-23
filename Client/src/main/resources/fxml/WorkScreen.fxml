@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane minHeight="400.0" minWidth="600.0" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.krilov.clientNIO.Controllers.WorkScreenController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <HBox spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox>
+               <children>
+                  <HBox>
+                     <children>
+                        <ComboBox fx:id="diskBox" maxWidth="80.0" minWidth="50.0" onAction="#selectDiskAction" prefWidth="80.0">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                        <TextField fx:id="localPathField" editable="false" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="btnLocalUp" focusTraversable="false" mnemonicParsing="false" onAction="#localUp" prefWidth="80.0" text="Вверх" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <TableView fx:id="localTable" prefWidth="550.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
+            <VBox fx:id="controlPanel" alignment="CENTER" fillWidth="false" maxWidth="80.0" minWidth="50.0" prefWidth="80.0" spacing="20.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button fx:id="btnCopyToServer" focusTraversable="false" mnemonicParsing="false" onAction="#sendFileToServer" text="&gt;&gt;" />
+                  <Button fx:id="btnCopyFromServer" focusTraversable="false" mnemonicParsing="false" onAction="#getFilefromServer" text="&lt;&lt;" />
+                  <Button fx:id="btnDel" focusTraversable="false" mnemonicParsing="false" onAction="#deleteFile" text="Del" />
+               </children>
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+            </VBox>
+            <VBox>
+               <children>
+                  <HBox>
+                     <children>
+                        <TextField fx:id="serverPathField" editable="false" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="btnServerUp" focusTraversable="false" mnemonicParsing="false" prefWidth="80.0" text="Вверх" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <TableView fx:id="serverTable" prefWidth="550.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+         <BorderPane.margin>
+            <Insets bottom="5.0" top="5.0" />
+         </BorderPane.margin>
+      </HBox>
+   </center>
+   <bottom>
+      <AnchorPane prefHeight="15.0" BorderPane.alignment="CENTER">
+         <children>
+            <ProgressBar fx:id="progressBar" minHeight="15.0" minWidth="250.0" prefHeight="15.0" progress="0.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
+            <TextField fx:id="statusTextField" editable="false" focusTraversable="false" prefHeight="15.0" promptText="status bar" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="260.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font size="8.0" />
+               </font></TextField>
+         </children>
+         <BorderPane.margin>
+            <Insets left="5.0" right="5.0" />
+         </BorderPane.margin>
+      </AnchorPane>
+   </bottom>
+</BorderPane>
