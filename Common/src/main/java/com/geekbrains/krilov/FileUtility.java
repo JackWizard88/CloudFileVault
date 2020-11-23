@@ -1,22 +1,30 @@
 package com.geekbrains.krilov;
 
+
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class FileUtility {
 
-    public static void createFile(String fileName) throws IOException {
+    public static void createFile(String fileName) {
         File file = new File(fileName);
         if (!file.exists()) {
-            file.createNewFile();
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public static void createDirectory(String dirName) throws IOException {
-        File file = new File(dirName);
-        if (!file.exists()) {
-            file.mkdir();
+        Path path = Paths.get(dirName);
+        path.normalize();
+        if (!Files.exists(path)) {
+            Files.createDirectories(path);
         }
     }
 
@@ -69,22 +77,18 @@ public class FileUtility {
         }
     }
 
-    public static void sendFileList(DataOutputStream os, List<Path> filelist) {
-        try {
-            System.out.println("sending file list...");
-            String list = "";
+    public static String sendFileList(List<Path> fileList) {
 
-            for (Path f : filelist) {
-                String path = f.getFileName().toString();
-                list += path + "//";
-            }
-            list += ("/end_of_list");
+        System.out.println("sending file list...");
+        String list = "";
+        if (fileList.size() == 0) return "list is empty//end.";
 
-            os.writeUTF("/list " + list);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (Path f : fileList) {
+            String path = f.getFileName().toString();
+            list += path + "//";
         }
-    }
 
+        return list + "end.";
+
+    }
 }

@@ -1,9 +1,12 @@
-package com.geekbrains.krilov.server.handlers;
+package com.geekbrains.krilov.serverIO.handlers;
 
 import com.geekbrains.krilov.FileUtility;
-import com.geekbrains.krilov.server.ServerApp;
+import com.geekbrains.krilov.serverIO.ServerApp;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -121,7 +124,7 @@ public class ClientHandler {
         if (id != null) {
             try {
                 List<Path> list = Files.list(Paths.get("./Server/" + id + "/")).collect(Collectors.toList());
-                FileUtility.sendFileList(out, list);
+//                FileUtility.sendFileList(out, list);
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -1,4 +1,4 @@
-package com.geekbrains.krilov.client;
+package com.geekbrains.krilov.clientIO;
 
 import com.geekbrains.krilov.FileUtility;
 
@@ -14,6 +14,8 @@ public class ClientApp {
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
+
+    StringBuilder sb = new StringBuilder();
 
     private File file;
 
@@ -54,7 +56,7 @@ public class ClientApp {
                 out.writeUTF("/get " + file.getName());
                 continue;
             }
-            out.writeUTF(line);
+            out.writeBytes(line);
         }
 
         System.exit(0);
@@ -62,11 +64,21 @@ public class ClientApp {
     }
 
     private void runReadThread() {
+
         executorService.execute(() -> {
             while (true) {
                 try {
 
-                    String data = in.readUTF();
+                    sb.setLength(0);
+                    byte b;
+
+                    while (in.available() > 0) {
+                        b = in.readByte();
+                        sb.append((char)b);
+                    }
+
+                    String data = sb.toString();
+
                     String[] dataParts = data.split("\\s+", 2);
                     String command = dataParts[0];
 
@@ -79,7 +91,7 @@ public class ClientApp {
                             file = null;
                             break;
                         case ("/get") :
-                            System.out.println(dataParts[0]);
+                            System.out.println(dataParts[1]);
                             break;
                         case ("/info") :
                             System.out.println(dataParts[1]);
@@ -98,8 +110,8 @@ public class ClientApp {
     private void showlist(String data) {
 
         String[] subStr;
-        String delimeter = "//";
-        subStr = data.split(delimeter);
+        String delimiter = "//";
+        subStr = data.split(delimiter);
 
         for(int i = 0; i < subStr.length - 1; i++) {
             System.out.println(subStr[i]);
